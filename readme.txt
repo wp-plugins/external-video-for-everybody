@@ -48,10 +48,13 @@ For a discussion of autobuffering in html5 see:
 
 == Installation ==
 
-1. You can download the current version of the External "Video for Everybody"
-	plugin from:  
-	http://kevinwiliarty.com/external-vfe/external-vfe-current.zip
+You can search for this plugin from your WordPress plugins administration interface and install it automatically.
+
+Or to install it manually:
+1. Download the zipped plugin using the link to the right
 1. Unzip it and put the folder in your wp-contents/plugins folder
+
+After activating the plugin, you should:
 1. Configure the settings at *Media > External VfE*
 1. Add shortcodes to your posts and pages in order to diplay video
 
