@@ -10,6 +10,10 @@ Delivers ogg/theora html5 video from an external storage location with fallbacks
 
 == Description ==
 
+**Important: This plugin is designed to operate on media files hosted 
+outside your WordPress site. It does not integrate with the Media library, 
+and it does not create the media files.**
+
 *External "Video for Everybody"* is a WordPress plugin that you can use to show
 videos on your WordPress site. You enter a simple shortcode on your page, and
 the plugin generates the HTML to deliver the media. Browsers that understand
