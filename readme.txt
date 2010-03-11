@@ -1,0 +1,155 @@
+=== External "Video for Everybody" ===
+Contributors: kwiliarty
+Donate link: none
+Tags: video, html5
+Requires at least: 2.8
+Tested up to: 2.9.2
+Stable tag: 0.4.6
+
+Delivers ogg/theora html5 video from an external storage location with fallbacks to quicktime, flash, and links for download.
+
+== Description ==
+
+*External "Video for Everybody"* is a WordPress plugin that you can use to show
+videos on your WordPress site. You enter a simple shortcode on your page, and
+the plugin generates the HTML to deliver the media. Browsers that understand
+the HTML5 tag will use Ogg/Theora .ogv files and secondarily MPEG/H.264 .mp4
+files. Other browsers can play the .mp4 with a QuickTime plugin, if they have
+it. Still other browsers can use Flash to play the .mp4. In all cases, the
+markup includes links to download the media files. The HTML used here diverges
+only slightly from the [Video for
+Everybody](http://camendesign.com/code/video_for_everybody) model. See that site for fuller details.
+
+* My adaptation includes a poster .mp4 for the QuickTime object so that 
+  the full media file will download only when activated.
+* I add a class attribute to the tag to make it available for CSS styling
+
+This plugin is not for everybody, even if the video tries to be. If I were not
+writing my own plugin, I would probably be using the [Degradable HTML5 audio
+and video Plugin](http://soukie.net/degradable-html5-audio-and-video-plugin/) by Pavel Soukenik, but there are some differences worth
+noting. Soukenik's plugin uses JavaScript to detect different browsers, and it
+goes straight to Flash rather than trying first to use QuickTime. You might
+want that. My own plugin, adhering closely to the [Video for
+Everybody](http://camendesign.com/code/video_for_everybody)
+approach, uses no JavaScript and falls back to QuickTime before Flash. I also
+offer an options page where you can define site-wide default paths and
+dimensions. The defaults can be overridden in any particular shortcode, but in
+default cases this keeps the shortcode simple. In his favor, Soukenik's
+shortcodes give you more control over playback options.
+
+**Important:** The Safari browser will autobuffer the media files you link to using this
+plugin. Depending on how many movies you serve on a single page, and on how
+large they are, autobuffering can significantly slow your clients' browsers,
+and it can also hit your bandwidth. Please bear this in mind when considering
+use of this plugin.
+
+For a discussion of autobuffering in html5 see:
+[http://daringfireball.net/2009/12/html5_video_unusable]
+
+== Installation ==
+
+1. You can download the current version of the External "Video for Everybody"
+	plugin from:  
+	http://kevinwiliarty.com/external-vfe/external-vfe-current.zip
+1. Unzip it and put the folder in your wp-contents/plugins folder
+1. Configure the settings at *Media > External VfE*
+1. Add shortcodes to your posts and pages in order to diplay video
+
+== Frequently Asked Questions ==
+
+= Why this plugin? =
+
+This plugin is not for everybody, even if the video tries to be. If I were not
+writing my own plugin, I would probably be using the [Degradable HTML5 audio
+and video
+Plugin](http://soukie.net/degradable-html5-audio-and-video-plugin/) by Pavel Soukenik, but there are some differences worth
+noting. Soukenik's plugin uses JavaScript to detect different browsers, and it
+goes straight to Flash rather than trying first to use QuickTime. You might
+want that. My own plugin, adhering closely to the [Video for
+Everybody](http://camendesign.com/code/video_for_everybody)
+approach, uses no JavaScript and falls back to QuickTime before Flash. I also
+offer an options page where you can define site-wide default paths and
+dimensions. The defaults can be overridden in any particular shortcode, but in
+default cases this keeps the shortcode simple. In his favor, Soukenik's
+shortcodes give you more control over playback options.
+
+= Who is this plugin for? =
+
+Ultimately it's for myself. I created the External "Video for Everybody"
+plugin to suit my own priorities, but I also tried to put it together in a way
+that would make it useful for and usable by others, and I am happy to share
+it. I host my video outside my WordPress site. I want to use HTML5 and Ogg.
+So… *External "Video for Everybody"*
+
+= Are you offering support for this plugin? =
+
+No.
+
+= How can I create the video files this plugin looks for? =
+
+The [Theora Cookbook](http://en.flossmanuals.net/TheoraCookbook/) has a lot of information on how to encode .ogv files
+
+You might also be interested in trying a [shell
+script](http://kevinwiliarty.com/dokuwiki/doku.php/open/vfe_bash_script) I use to convert videos
+for myself.
+
+== Screenshots ==
+
+1. options-page.png
+
+== Upgrade Notice ==
+
+= 0.4.6 =
+This is a very minor upgrade with no consequences for functionality.
+
+== Usage ==
+
+A minimal shortcode takes the form
+
+>`[external-vfe name="VIDEO"]`
+
+where *VIDEO* stands for the simple name of your video (without any file
+extention).
+
+*name* is the only required attribute. Optional attributes are:
+
+* width (in pixels)
+* height (in pixels)
+* path (URL to the folder where you host your video files)
+* poster_extension (png, jpg, or gif)
+* swf_file (The address to your Flash player)
+
+All of these can also be set as defaults.
+
+See the plugin home page for more details:
+[http://open.pages.kevinwiliarty.com/external-video-for-everybody/]
+
+== Changelog ==
+
+= 0.4.6 =
+* bundled with a better readme.txt
+
+= 0.4.5 =
+* Added some help tips to the options page
+
+= 0.4.4 =
+* Added a *class="external-vfe"* attribute to the &lt;video> tag
+to make it available for CSS styling
+
+= 0.4.3 =
+* Introduced *href* and *target* parameters to the QuickTime object to
+prevent IE from autoloading entire movies.
+* **IMPORTANT:** It is now necessary to upload a fourth (tiny) file for
+each movie.
+
+= 0.4.2 =
+* prefixed *evfe_* to settings names make them distinctive
+* **IMPORTANT:** Old settings need to be re-entered on the *Media >
+External-VfE* settings page
+
+= 0.4.1 =
+* updated to Video for Everybody 0.3.2
+
+= 0.4 =
+* initial working version
+
