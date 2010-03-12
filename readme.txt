@@ -117,7 +117,7 @@ A minimal shortcode takes the form
 >`[external-vfe name="VIDEO"]`
 
 where *VIDEO* stands for the simple name of your video (without any file
-extention).
+extension).
 
 *name* is the only required attribute. Optional attributes are:
 
