@@ -4,7 +4,7 @@ Donate link: none
 Tags: video, html5
 Requires at least: 2.8
 Tested up to: 2.9.2
-Stable tag: 0.4.6
+Stable tag: 0.4.7
 
 Delivers ogg/theora html5 video from an external storage location with fallbacks to quicktime, flash, and links for download.
 
@@ -31,9 +31,8 @@ Everybody](http://camendesign.com/code/video_for_everybody) model. See that site
 This plugin is not for everybody, even if the video tries to be. If I were not
 writing my own plugin, I would probably be using the [Degradable HTML5 audio
 and video Plugin](http://soukie.net/degradable-html5-audio-and-video-plugin/) by Pavel Soukenik, but there are some differences worth
-noting. Soukenik's plugin uses JavaScript to detect different browsers, and it
-goes straight to Flash rather than trying first to use QuickTime. You might
-want that. My own plugin, adhering closely to the [Video for
+noting. Soukenik's plugin goes straight to Flash rather than trying 
+first to use QuickTime when the browser fails to recognize the &lt;video> tag. You might want that. My own plugin, adhering closely to the [Video for
 Everybody](http://camendesign.com/code/video_for_everybody)
 approach, uses no JavaScript and falls back to QuickTime before Flash. I also
 offer an options page where you can define site-wide default paths and
@@ -134,6 +133,9 @@ See the plugin home page for more details:
 [http://open.pages.kevinwiliarty.com/external-video-for-everybody/]
 
 == Changelog ==
+
+= 0.4.7 =
+* factual corrections to readme.txt
 
 = 0.4.6 =
 * bundled with a better readme.txt
