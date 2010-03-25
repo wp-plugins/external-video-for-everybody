@@ -95,7 +95,9 @@ No.
 
 = How can I create the video files this plugin looks for? =
 
-The [Theora Cookbook](http://en.flossmanuals.net/TheoraCookbook/) has a lot of information on how to encode .ogv files
+The [Theora Cookbook](http://en.flossmanuals.net/TheoraCookbook/) has a lot of information on how to encode .ogv files.
+
+The [Miro Video Converter](http://www.mirovideoconverter.com/) is a handy free and opensource utility for this purpose.
 
 You might also be interested in trying a [shell
 script](http://kevinwiliarty.com/dokuwiki/doku.php/open/vfe_bash_script) I use to convert videos
