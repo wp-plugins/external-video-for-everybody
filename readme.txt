@@ -4,7 +4,7 @@ Donate link: none
 Tags: video, html5
 Requires at least: 2.8
 Tested up to: 2.9.2
-Stable tag: 0.4.7
+Stable tag: 0.5
 
 Delivers ogg/theora html5 video from an external storage location with fallbacks to quicktime, flash, and links for download.
 
