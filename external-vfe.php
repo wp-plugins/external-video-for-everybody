@@ -3,7 +3,7 @@
 Plugin Name: External "Video for Everybody"
 Plugin URI: http://open.pages.kevinwiliarty.com/external-video-for-everybody/
 Description: Use the "Video for Everybody" code (v0.3.2--http://camendesign.com/code/video_for_everybody) to display ogg/theora video on browsers that support the html5 &lt;video&gt; tag while falling back to Quicktime or Flash on browsers that do not.
-Version: 0.4.7
+Version: 0.5
 Author: Kevin Wiliarty
 Author URI: http://open.pages.kevinwiliarty.com/
 */
@@ -138,8 +138,8 @@ function external_vfe_func( $atts ) {
 		//render the html to display the video
 		return "
 			<video class='external-vfe' width='{$width}' height='{$height}' poster='{$path}{$name}.{$poster_extension}' controls='controls'>
-				<source src='{$path}{$name}.ogv' type='video/ogg'></source>
-				<source src='{$path}{$name}.mp4' type='video/mp4'></source><!--[if gt IE 6]>
+				<source src='{$path}{$name}.mp4' type='video/mp4'></source>
+				<source src='{$path}{$name}.ogv' type='video/ogg'></source><!--[if gt IE 6]>
 				<object width='{$width}' height='{$qt_height}' classid='clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B'><!
 				[endif]--><!--[if !IE]><!-->
 				<object width='{$width}' height='{$qt_height}' type='video/quicktime' data='{$path}{$name}.mp4'>

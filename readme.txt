@@ -109,6 +109,9 @@ for myself.
 
 == Upgrade Notice ==
 
+= 0.5 =
+A small but important change to the code brings the plugin up to date with the official version 0.3.3 of Video for Everybody. The update is critical for playback on iPads.
+
 = 0.4.6 =
 This is a very minor upgrade with no consequences for functionality.
 
@@ -135,6 +138,9 @@ See the plugin home page for more details:
 [http://open.pages.kevinwiliarty.com/external-video-for-everybody/]
 
 == Changelog ==
+
+= 0.5 =
+* .mp4 now listed as first source -- critical change for iPad
 
 = 0.4.7 =
 * factual corrections to readme.txt
