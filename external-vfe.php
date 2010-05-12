@@ -3,7 +3,7 @@
 Plugin Name: External "Video for Everybody"
 Plugin URI: http://open.pages.kevinwiliarty.com/external-video-for-everybody/
 Description: Use the "Video for Everybody" code (v0.3.2--http://camendesign.com/code/video_for_everybody) to display ogg/theora video on browsers that support the html5 &lt;video&gt; tag while falling back to Quicktime or Flash on browsers that do not.
-Version: 0.5
+Version: 0.6
 Author: Kevin Wiliarty
 Author URI: http://open.pages.kevinwiliarty.com/
 */
@@ -34,6 +34,12 @@ function sanitize_image_extension( $input ) {
 		$input = 'jpg'; //revert to jpg
 	}
 	return $input; //return the validated (and sanitized) value
+}
+
+//sanitize query string
+function sanitize_query_string( $untrusted ) {
+	$trusted = preg_replace( '/[^a-z0-1?&=;\-~_+%\.]/i' , "" , $untrusted );
+	return $trusted;
 }
 
 //hook for custom plugin settings menu
@@ -69,6 +75,8 @@ function register_external_vfe_settings() {
 	);
 	//path to flash player must be url
 	register_setting( 'external-vfe-group', 'evfe_swf_file', 'esc_url' );
+	//query portion of links to media assets must be url safe
+	register_setting( 'external-vfe-group', 'evfe_query', 'sanitize_query_string' );
 }
 
 //function to create options page
@@ -83,6 +91,11 @@ function external_vfe_options() {
 					<th scope='row' style='text-align:right;'>path:</th>
 					<td><input style='width: 300px;' type='text' name='evfe_path' value='<?php echo get_option( 'evfe_path' ); ?>' /></td>
 					<td>URL to the directory that contains your media files. Include the trailing slash.</td>
+				</tr>
+				<tr valign='top'>
+					<th scope='row' style='text-align:right;'>query:</th>
+					<td><input style='width: 300px;' type='text' name='evfe_query' value='<?php echo get_option( 'evfe_query' ); ?>' /></td>
+					<td>An option query string that follows the file name in links to your media assets. Should begin with a question mark.</td>
 				</tr>
 				<tr valign='top'>
 					<th scope='row' style='text-align:right;'>width:</th>
@@ -120,6 +133,7 @@ function external_vfe_func( $atts ) {
 		shortcode_atts(
 			array(
 				'path' => get_option( 'evfe_path' ),
+				'query' => get_option( 'evfe_query' ),
 				'poster_extension' => get_option( 'evfe_poster_extension' ),
 				'swf_file' => get_option( 'evfe_swf_file' ),
 				'name' => 'no name',
@@ -133,33 +147,39 @@ function external_vfe_func( $atts ) {
 	//set height for quicktime with room for controls
 	$qt_height = $height+16;
 
+	//encode the path for inclusion in a value
+	$enc_path = urlencode( $path );
+
+	//encode the query string for inclusion in a value
+	$enc_query = urlencode( $query );
+
 	//if a value for name has been provided
 	if ( $name != 'no name' ) {
 		//render the html to display the video
 		return "
-			<video class='external-vfe' width='{$width}' height='{$height}' poster='{$path}{$name}.{$poster_extension}' controls='controls'>
-				<source src='{$path}{$name}.mp4' type='video/mp4'></source>
-				<source src='{$path}{$name}.ogv' type='video/ogg'></source><!--[if gt IE 6]>
+			<video class='external-vfe' width='{$width}' height='{$height}' poster='{$path}{$name}.{$poster_extension}{$query}' controls='controls'>
+				<source src='{$path}{$name}.mp4{$query}' type='video/mp4'></source>
+				<source src='{$path}{$name}.ogv{$query}' type='video/ogg'></source><!--[if gt IE 6]>
 				<object width='{$width}' height='{$qt_height}' classid='clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B'><!
 				[endif]--><!--[if !IE]><!-->
-				<object width='{$width}' height='{$qt_height}' type='video/quicktime' data='{$path}{$name}.mp4'>
+				<object width='{$width}' height='{$qt_height}' type='video/quicktime' data='{$path}{$name}.mp4{$query}'>
 				<!--<![endif]-->
-				<param name='src' value='{$path}{$name}-poster.mp4' />
-				<param name='href' value='{$path}{$name}.mp4' />
+				<param name='src' value='{$path}{$name}-poster.mp4{$query}' />
+				<param name='href' value='{$path}{$name}.mp4{$query}' />
 				<param name='target' value='myself' />
 				<param name='showlogo' value='false' />
 				<param name='autoplay' value='false' />
 				<object width='{$width}' height='{$height}' type='application/x-shockwave-flash'
-					data='{$swf_file}?image={$path}{$name}.{$poster_extension}&file={$path}{$name}.mp4'>
+					data='{$swf_file}?image={$path}{$name}.{$poster_extension}{$query}&file={$path}{$name}.mp4{$query}'>
 					<param name='autoplay' value='false' />
-					<param name='movie' value='{$swf_file}?image={$path}{$name}{$poster_extension}&file={$path}{$name}.mp4' />
-					<img src='{$path}{$name}.{$poster_extension}' width='{$width}' height='{$height}' alt='Video here'
+					<param name='movie' value='{$swf_file}?image={$path}{$name}.{$poster_extension}{$query}&file={$path}{$name}.mp4{$query}' />
+					<img src='{$path}{$name}.{$poster_extension}{$query}' width='{$width}' height='{$height}' alt='Video here'
 						 title='No video playback capabilities, please download the video below' />
 				</object><!--[if gt IE 6]><!--></object><!--<![endif]-->
 			</video>
 			<p>Downloads: <br />
-			<a href='{$path}{$name}.mp4'>{$path}{$name}.mp4</a><br />
-			<a href='{$path}{$name}.ogv'>{$path}{$name}.ogv</a>
+			<a href='{$path}{$name}.mp4{$query}'>{$path}{$name}.mp4{$query}</a><br />
+			<a href='{$path}{$name}.ogv{$query}'>{$path}{$name}.ogv{$query}</a>
 			</p>
 		";
 	}

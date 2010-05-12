@@ -139,6 +139,10 @@ See the plugin home page for more details:
 
 == Changelog ==
 
+= 0.6 =
+* adds support for query elements in URL's to media assets
+* adds a missing period for embedded flash encoding
+
 = 0.5 =
 * .mp4 now listed as first source -- critical change for iPad
 
