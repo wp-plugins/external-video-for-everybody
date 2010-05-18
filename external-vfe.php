@@ -67,6 +67,8 @@ function register_external_vfe_settings() {
 	register_setting( 'external-vfe-group', 'evfe_height', 'intval' );
 	//evfe_width must be int
 	register_setting( 'external-vfe-group', 'evfe_width', 'intval' );
+	//whether to include posters in the code
+	register_setting( 'external-vfe-group', 'evfe_include_poster' );
 	//poster image file extension must be whitelisted
 	register_setting(
 		'external-vfe-group', 
@@ -95,7 +97,7 @@ function external_vfe_options() {
 				<tr valign='top'>
 					<th scope='row' style='text-align:right;'>query:</th>
 					<td><input style='width: 300px;' type='text' name='evfe_query' value='<?php echo get_option( 'evfe_query' ); ?>' /></td>
-					<td>An option query string that follows the file name in links to your media assets. Should begin with a question mark.</td>
+					<td>(Experimental!) An optional query string to follow the file name. Should begin with a question mark. Most users will not need this.</td>
 				</tr>
 				<tr valign='top'>
 					<th scope='row' style='text-align:right;'>width:</th>
@@ -106,6 +108,11 @@ function external_vfe_options() {
 					<th scope='row' style='text-align:right;'>height:</th>
 					<td><input type='text' name='evfe_height' value='<?php echo get_option( 'evfe_height' ); ?>' /></td>
 					<td>Default height (in pixels) for your videos. (Max for iPhone is 480.)</td>
+				</tr>
+				<tr valign='top'>
+					<th scope='row' style='text-align:right;'>include_poster:</th>
+					<td><input type='checkbox' name='evfe_include_poster' value='true' <?php if ( get_option( 'evfe_include_poster' ) == "true" ) {echo "checked='yes' ";} ?>/></td>
+					<td>Posters must be disabled to allow iPad playback.</td>
 				</tr>
 				<tr valign='top'>
 					<th scope='row' style='text-align:right;'>poster_extension:</th>
@@ -139,6 +146,7 @@ function external_vfe_func( $atts ) {
 				'name' => 'no name',
 				'height' => get_option( 'evfe_height' ),
 				'width' => get_option( 'evfe_width' ),
+				'include_poster' => get_option( 'evfe_include_poster' ),
 			), 
 			$atts
 		)
@@ -147,17 +155,17 @@ function external_vfe_func( $atts ) {
 	//set height for quicktime with room for controls
 	$qt_height = $height+16;
 
-	//encode the path for inclusion in a value
-	$enc_path = urlencode( $path );
-
-	//encode the query string for inclusion in a value
-	$enc_query = urlencode( $query );
+	//include poster or not
+	$poster = "";
+	if ( $include_poster == "true" ) {
+		$poster = "poster='{$path}{$name}.{$poster_extension}{$query}'";
+	}
 
 	//if a value for name has been provided
 	if ( $name != 'no name' ) {
 		//render the html to display the video
 		return "
-			<video class='external-vfe' width='{$width}' height='{$height}' poster='{$path}{$name}.{$poster_extension}{$query}' controls='controls'>
+			<video class='external-vfe' width='{$width}' height='{$height}' {$poster} controls='controls'>
 				<source src='{$path}{$name}.mp4{$query}' type='video/mp4'></source>
 				<source src='{$path}{$name}.ogv{$query}' type='video/ogg'></source><!--[if gt IE 6]>
 				<object width='{$width}' height='{$qt_height}' classid='clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B'><!

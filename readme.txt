@@ -75,7 +75,13 @@ noting. Soukenik's plugin uses JavaScript to detect different browsers, and it
 goes straight to Flash rather than trying first to use QuickTime. You might
 want that. My own plugin, adhering closely to the [Video for
 Everybody](http://camendesign.com/code/video_for_everybody)
-approach, uses no JavaScript and falls back to QuickTime before Flash. I also
+approach, uses no JavaScript and falls back to QuickTime before Flash. 
+(Note that version 0.4 of Video for Everybody drops the QuickTime 
+fallback in order to simplify the HTML. Since the plugin already 
+simplifies the process of creating the code, I am maintaining the 
+QuickTime fallback for the present.) 
+
+I also
 offer an options page where you can define site-wide default paths and
 dimensions. The defaults can be overridden in any particular shortcode, but in
 default cases this keeps the shortcode simple. In his favor, Soukenik's
@@ -109,6 +115,12 @@ for myself.
 
 == Upgrade Notice ==
 
+= 0.6 =
+This update adds an option for omitting the poster attribute from the video tag.
+Omitting the poster attribute is currently required for playback on iPads. 
+This update also adds experimental support for links to external media that
+require a query string after the file name. 
+
 = 0.5 =
 A small but important change to the code brings the plugin up to date with the official version 0.3.3 of Video for Everybody. The update is critical for playback on iPads.
 
@@ -129,6 +141,8 @@ extension).
 * width (in pixels)
 * height (in pixels)
 * path (URL to the folder where you host your video files)
+* query (to follow the file name in the URL; should start with "?")
+* include_poster (set to "true" to include a poster attribute in the video tag)
 * poster_extension (png, jpg, or gif)
 * swf_file (The address to your Flash player)
 
@@ -140,7 +154,8 @@ See the plugin home page for more details:
 == Changelog ==
 
 = 0.6 =
-* adds support for query elements in URL's to media assets
+* adds an option to omit posters (as required for iPad playback)
+* adds experimental support for query elements in URL's to media assets
 * adds a missing period for embedded flash encoding
 
 = 0.5 =
