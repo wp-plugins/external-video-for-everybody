@@ -153,6 +153,12 @@ See the plugin home page for more details:
 
 == Changelog ==
 
+= 0.7 =
+* drops quicktime fallback. (Simplifies html; simplifies processing overhead; improves playback experience)
+* adds commented attribution to Kroc Camen of Camen Design
+* minor adjustments to video element attributes, including preload='none'
+* adopted self-closing source elements to validate as html5
+
 = 0.6 =
 * adds an option to omit posters (as required for iPad playback)
 * adds experimental support for query elements in URL's to media assets

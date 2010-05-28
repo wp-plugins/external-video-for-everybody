@@ -3,7 +3,7 @@
 Plugin Name: External "Video for Everybody"
 Plugin URI: http://open.pages.kevinwiliarty.com/external-video-for-everybody/
 Description: Use the "Video for Everybody" code (v0.3.2--http://camendesign.com/code/video_for_everybody) to display ogg/theora video on browsers that support the html5 &lt;video&gt; tag while falling back to Quicktime or Flash on browsers that do not.
-Version: 0.6
+Version: 0.7
 Author: Kevin Wiliarty
 Author URI: http://open.pages.kevinwiliarty.com/
 */
@@ -165,25 +165,16 @@ function external_vfe_func( $atts ) {
 	if ( $name != 'no name' ) {
 		//render the html to display the video
 		return "
-			<video class='external-vfe' width='{$width}' height='{$height}' {$poster} controls='controls'>
-				<source src='{$path}{$name}.mp4{$query}' type='video/mp4'></source>
-				<source src='{$path}{$name}.ogv{$query}' type='video/ogg'></source><!--[if gt IE 6]>
-				<object width='{$width}' height='{$qt_height}' classid='clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B'><!
-				[endif]--><!--[if !IE]><!-->
-				<object width='{$width}' height='{$qt_height}' type='video/quicktime' data='{$path}{$name}.mp4{$query}'>
-				<!--<![endif]-->
-				<param name='src' value='{$path}{$name}-poster.mp4{$query}' />
-				<param name='href' value='{$path}{$name}.mp4{$query}' />
-				<param name='target' value='myself' />
-				<param name='showlogo' value='false' />
-				<param name='autoplay' value='false' />
-				<object width='{$width}' height='{$height}' type='application/x-shockwave-flash'
-					data='{$swf_file}?image={$path}{$name}.{$poster_extension}{$query}&file={$path}{$name}.mp4{$query}'>
-					<param name='autoplay' value='false' />
-					<param name='movie' value='{$swf_file}?image={$path}{$name}.{$poster_extension}{$query}&file={$path}{$name}.mp4{$query}' />
-					<img src='{$path}{$name}.{$poster_extension}{$query}' width='{$width}' height='{$height}' alt='Video here'
+			<!-- 'Video for Everybody' v0.4.1 by Kroc Camen of Camen Design -->
+			<video class='external-vfe' width='{$width}' height='{$height}' {$poster} controls preload='none'>
+				<source src='{$path}{$name}.mp4{$query}' type='video/mp4' />
+				<source src='{$path}{$name}.ogv{$query}' type='video/ogg' />
+				<object width='{$width}' height='{$height}' type='application/x-shockwave-flash' data='{$swf_file}'>
+					<param name='movie' value='{$swf_file}' />
+					<param name='flashvars' value='image={$path}{$name}.{$poster_extension}{$query}&file={$path}{$name}.mp4{$query}' />
+					<img src='{$path}{$name}.mp4{$query}' width='{$width}' height='{$height}' alt='movie: {$name}'
 						 title='No video playback capabilities, please download the video below' />
-				</object><!--[if gt IE 6]><!--></object><!--<![endif]-->
+				</object>
 			</video>
 			<p>Downloads: <br />
 			<a href='{$path}{$name}.mp4{$query}'>{$path}{$name}.mp4{$query}</a><br />
