@@ -1,12 +1,12 @@
 === External "Video for Everybody" ===
 Contributors: kwiliarty
 Donate link: none
-Tags: video, html5, ogg, theora
+Tags: video, html5, ogg, theora, flash
 Requires at least: 2.8
 Tested up to: 2.9.2
 Stable tag: 0.6
 
-Delivers ogg/theora html5 video from an external storage location with fallbacks to quicktime, flash, and links for download.
+Delivers ogg/theora html5 video from an external storage location with fallbacks to flash, and links for download.
 
 == Description ==
 
@@ -17,27 +17,19 @@ and it does not create the media files.**
 *External "Video for Everybody"* is a WordPress plugin that you can use to show
 videos on your WordPress site. You enter a simple shortcode on your page, and
 the plugin generates the HTML to deliver the media. Browsers that understand
-the HTML5 tag will use Ogg/Theora .ogv files and secondarily MPEG/H.264 .mp4
-files. Other browsers can play the .mp4 with a QuickTime plugin, if they have
-it. Still other browsers can use Flash to play the .mp4. In all cases, the
+the HTML5 tag will display MPEG/H.264 (.mp4) files or Ogg/Theora (.ogv) files. Other browsers can use Flash to play the .mp4. In all cases, the
 markup includes links to download the media files. The HTML used here diverges
 only slightly from the [Video for
 Everybody](http://camendesign.com/code/video_for_everybody) model. See that site for fuller details.
 
-* My adaptation includes a poster .mp4 for the QuickTime object so that 
-  the full media file will download only when activated.
 * I add a class attribute to the tag to make it available for CSS styling
+* I have not yet incorporated WebM support
 
 This plugin is not for everybody, even if the video tries to be. If I were not
 writing my own plugin, I would probably be using the [Degradable HTML5 audio
-and video Plugin](http://soukie.net/degradable-html5-audio-and-video-plugin/) by Pavel Soukenik, but there are some differences worth
-noting. Soukenik's plugin goes straight to Flash rather than trying 
-first to use QuickTime when the browser fails to recognize the &lt;video> tag. You might want that. My own plugin, adhering closely to the [Video for
+and video Plugin](http://soukie.net/degradable-html5-audio-and-video-plugin/) by Pavel Soukenik. My plugin uses and will follow the [Video for
 Everybody](http://camendesign.com/code/video_for_everybody)
-approach, uses no JavaScript and falls back to QuickTime before Flash. I also
-offer an options page where you can define site-wide default paths and
-dimensions. The defaults can be overridden in any particular shortcode, but in
-default cases this keeps the shortcode simple. In his favor, Soukenik's
+approach. I also offer an options page where you can define site-wide default paths and dimensions. The defaults can be overridden in any particular shortcode, but if most of your video resides in the same place and has consistent dimensions, site-wide defaults keep the shortcodes simple. Soukenik's
 shortcodes give you more control over playback options.
 
 **Important:** The Safari browser will autobuffer the media files you link to using this
@@ -47,7 +39,7 @@ and it can also hit your bandwidth. Please bear this in mind when considering
 use of this plugin.
 
 For a discussion of autobuffering in html5 see:
-[http://daringfireball.net/2009/12/html5_video_unusable]
+http://daringfireball.net/2009/12/html5_video_unusable
 
 == Installation ==
 
@@ -67,25 +59,11 @@ After activating the plugin, you should:
 
 = Why this plugin? =
 
-This plugin is not for everybody, even if the video tries to be. If I were not
-writing my own plugin, I would probably be using the [Degradable HTML5 audio
-and video
-Plugin](http://soukie.net/degradable-html5-audio-and-video-plugin/) by Pavel Soukenik, but there are some differences worth
-noting. Soukenik's plugin uses JavaScript to detect different browsers, and it
-goes straight to Flash rather than trying first to use QuickTime. You might
-want that. My own plugin, adhering closely to the [Video for
-Everybody](http://camendesign.com/code/video_for_everybody)
-approach, uses no JavaScript and falls back to QuickTime before Flash. 
-(Note that version 0.4 of Video for Everybody drops the QuickTime 
-fallback in order to simplify the HTML. Since the plugin already 
-simplifies the process of creating the code, I am maintaining the 
-QuickTime fallback for the present.) 
+I have developed this plugin to provide an easy way to implement the "Video for Everybody" approach on a WordPress site. 
 
-I also
-offer an options page where you can define site-wide default paths and
-dimensions. The defaults can be overridden in any particular shortcode, but in
-default cases this keeps the shortcode simple. In his favor, Soukenik's
-shortcodes give you more control over playback options.
+I also wanted a way to update the delivery for all of my video files. As I update the plugin, existing video will be served using the new code.
+
+Finally, I wanted to have a settings page so that I could spare myself the trouble of adding repetetive details to each video entry. 
 
 = Who is this plugin for? =
 
@@ -93,7 +71,7 @@ Ultimately it's for myself. I created the External "Video for Everybody"
 plugin to suit my own priorities, but I also tried to put it together in a way
 that would make it useful for and usable by others, and I am happy to share
 it. I host my video outside my WordPress site. I want to use HTML5 and Ogg.
-So… *External "Video for Everybody"*
+So... *External "Video for Everybody"*
 
 = Are you offering support for this plugin? =
 
@@ -114,6 +92,9 @@ for myself.
 1. options-page.png
 
 == Upgrade Notice ==
+
+= 0.7 =
+This update follows Video for Everybody 0.4+ by dropping embedded QuickTime objects. The generated HTML is lighter, but it is also easier to prepare the media. This update and the previous one have reduced the number of files you need to create from 4 to 2. The user experience is also improved.
 
 = 0.6 =
 This update adds an option for omitting the poster attribute from the video tag.
@@ -149,12 +130,12 @@ extension).
 All of these can also be set as defaults.
 
 See the plugin home page for more details:
-[http://open.pages.kevinwiliarty.com/external-video-for-everybody/]
+http://open.pages.kevinwiliarty.com/external-video-for-everybody/
 
 == Changelog ==
 
 = 0.7 =
-* drops quicktime fallback. (Simplifies html; simplifies processing overhead; improves playback experience)
+* drops embedded quicktime fallback. (Simplifies html; simplifies processing overhead; improves playback experience)
 * adds commented attribution to Kroc Camen of Camen Design
 * minor adjustments to video element attributes, including preload='none'
 * adopted self-closing source elements to validate as html5
