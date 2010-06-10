@@ -4,7 +4,7 @@ Donate link: none
 Tags: video, html5, ogg, theora, flash
 Requires at least: 2.8
 Tested up to: 2.9.2
-Stable tag: 0.7
+Stable tag: 0.7.1
 
 Delivers ogg/theora html5 video from an external storage location with fallbacks to flash, and links for download.
 
