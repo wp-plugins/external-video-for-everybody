@@ -93,6 +93,9 @@ for myself.
 
 == Upgrade Notice ==
 
+= 0.7.1 =
+Fixes a minor bug in the line that calls the poster image for the embedded Flash object.
+
 = 0.7 =
 This update follows Video for Everybody 0.4+ by dropping embedded QuickTime objects. The generated HTML is lighter, but it is also easier to prepare the media. This update and the previous one have reduced the number of files you need to create from 4 to 2. The user experience is also improved.
 
@@ -133,6 +136,9 @@ See the plugin home page for more details:
 http://open.pages.kevinwiliarty.com/external-video-for-everybody/
 
 == Changelog ==
+
+= 0.7.1 =
+* Fixes a minor bug in the line that calls the poster image for the embedded Flash object. 
 
 = 0.7 =
 * drops embedded quicktime fallback. (Simplifies html; simplifies processing overhead; improves playback experience)

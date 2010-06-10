@@ -3,7 +3,7 @@
 Plugin Name: External "Video for Everybody"
 Plugin URI: http://open.pages.kevinwiliarty.com/external-video-for-everybody/
 Description: Use the "Video for Everybody" code (v0.4.1--http://camendesign.com/code/video_for_everybody) to display ogg/theora or h.264 video on browsers that support the html5 &lt;video&gt; tag while falling back to Flash (h.264) on browsers that do not.
-Version: 0.7
+Version: 0.7.1
 Author: Kevin Wiliarty
 Author URI: http://open.pages.kevinwiliarty.com/
 */
@@ -162,14 +162,14 @@ function external_vfe_func( $atts ) {
 	if ( $name != 'no name' ) {
 		//render the html to display the video
 		return "
-			<!-- 'Video for Everybody' v0.4.1 by Kroc Camen of Camen Design -->
+			<!-- based on 'Video for Everybody' v0.4.1 by Kroc Camen of Camen Design -->
 			<video class='external-vfe' width='{$width}' height='{$height}' {$poster} controls preload='none'>
 				<source src='{$path}{$name}.mp4{$query}' type='video/mp4' />
 				<source src='{$path}{$name}.ogv{$query}' type='video/ogg' />
 				<object width='{$width}' height='{$height}' type='application/x-shockwave-flash' data='{$swf_file}'>
 					<param name='movie' value='{$swf_file}' />
 					<param name='flashvars' value='image={$path}{$name}.{$poster_extension}{$query}&file={$path}{$name}.mp4{$query}' />
-					<img src='{$path}{$name}.mp4{$query}' width='{$width}' height='{$height}' alt='movie: {$name}'
+					<img src='{$path}{$name}.{$poster_extension}{$query}' width='{$width}' height='{$height}' alt='movie: {$name}'
 						 title='No video playback capabilities, please download the video below' />
 				</object>
 			</video>
