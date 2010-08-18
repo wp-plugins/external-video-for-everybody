@@ -2,8 +2,8 @@
 /*
 Plugin Name: External "Video for Everybody"
 Plugin URI: http://open.pages.kevinwiliarty.com/external-video-for-everybody/
-Description: Use the "Video for Everybody" code (v0.4.1--http://camendesign.com/code/video_for_everybody) to display ogg/theora or h.264 video on browsers that support the html5 &lt;video&gt; tag while falling back to Flash (h.264) on browsers that do not.
-Version: 0.7.1
+Description: Use the "Video for Everybody" code (v0.4.1--http://camendesign.com/code/video_for_everybody) to display ogg/theora, MPEG/h.264 or VP8/webm video on browsers that support the html5 &lt;video&gt; tag while falling back to Flash (h.264) on browsers that do not.
+Version: 0.8
 Author: Kevin Wiliarty
 Author URI: http://open.pages.kevinwiliarty.com/
 */
@@ -42,6 +42,14 @@ function sanitize_query_string( $untrusted ) {
 	return $trusted;
 }
 
+//sanitize checkboxes
+function sanitize_checkbox( $checkbox ) {
+	if ( $checkbox != true ) {
+		$checkbox = "";
+	}
+	return $checkbox;
+}
+
 //hook for custom plugin settings menu
 add_action( 'admin_menu', 'external_vfe_menu' );
 
@@ -68,7 +76,7 @@ function register_external_vfe_settings() {
 	//evfe_width must be int
 	register_setting( 'external-vfe-group', 'evfe_width', 'intval' );
 	//whether to include posters in the code
-	register_setting( 'external-vfe-group', 'evfe_include_poster' );
+	register_setting( 'external-vfe-group', 'evfe_include_poster' , 'sanitize_checkbox' );
 	//poster image file extension must be whitelisted
 	register_setting(
 		'external-vfe-group', 
@@ -79,6 +87,8 @@ function register_external_vfe_settings() {
 	register_setting( 'external-vfe-group', 'evfe_swf_file', 'esc_url' );
 	//query portion of links to media assets must be url safe
 	register_setting( 'external-vfe-group', 'evfe_query', 'sanitize_query_string' );
+	//include webm file in the list of downloads
+	register_setting( 'external-vfe-group' , 'evfe_webm_download' , 'sanitize_checkbox' );
 }
 
 //function to create options page
@@ -114,6 +124,12 @@ function external_vfe_options() {
 					<td><input type='checkbox' name='evfe_include_poster' value='true' <?php if ( get_option( 'evfe_include_poster' ) == "true" ) {echo "checked='yes' ";} ?>/></td>
 					<td>Posters must be disabled to allow iPad playback.</td>
 				</tr>
+				</tr>
+				<tr valign='top'>
+					<th scope='row' style='text-align:right;'>webm_download:</th>
+					<td><input type='checkbox' name='evfe_webm_download' value='true' <?php if ( get_option( 'evfe_webm_download' ) == "true" ) {echo "checked='yes' ";} ?>/></td>
+					<td>Check the box to include a webm file in the downloads list.</td>
+				</tr>
 				<tr valign='top'>
 					<th scope='row' style='text-align:right;'>poster_extension:</th>
 					<td><input type='text' name='evfe_poster_extension' value='<?php echo get_option( 'evfe_poster_extension' ); ?>' /></td>
@@ -147,6 +163,7 @@ function external_vfe_func( $atts ) {
 				'height' => get_option( 'evfe_height' ),
 				'width' => get_option( 'evfe_width' ),
 				'include_poster' => get_option( 'evfe_include_poster' ),
+				'webm_download' => get_option( 'evfe_webm_download' ),
 			), 
 			$atts
 		)
@@ -158,6 +175,12 @@ function external_vfe_func( $atts ) {
 		$poster = "poster='{$path}{$name}.{$poster_extension}{$query}'";
 	}
 
+	//link to download a webm file
+	$webm_link = "";
+	if ( $webm_download == "true" ) {
+		$webm_link = "<a href='{$path}{$name}.webm{$query}'>{$path}{$name}.webm{$query}</a><br />";
+	}
+
 	//if a value for name has been provided
 	if ( $name != 'no name' ) {
 		//render the html to display the video
@@ -165,6 +188,7 @@ function external_vfe_func( $atts ) {
 			<!-- based on 'Video for Everybody' v0.4.1 by Kroc Camen of Camen Design -->
 			<video class='external-vfe' width='{$width}' height='{$height}' {$poster} controls preload='none'>
 				<source src='{$path}{$name}.mp4{$query}' type='video/mp4' />
+				<source src='{$path}{$name}.webm{$query}' type='video/webm' />
 				<source src='{$path}{$name}.ogv{$query}' type='video/ogg' />
 				<object width='{$width}' height='{$height}' type='application/x-shockwave-flash' data='{$swf_file}'>
 					<param name='movie' value='{$swf_file}' />
@@ -174,7 +198,7 @@ function external_vfe_func( $atts ) {
 				</object>
 			</video>
 			<p>Downloads: <br />
-			<a href='{$path}{$name}.mp4{$query}'>{$path}{$name}.mp4{$query}</a><br />
+			<a href='{$path}{$name}.mp4{$query}'>{$path}{$name}.mp4{$query}</a><br />{$webm_link}
 			<a href='{$path}{$name}.ogv{$query}'>{$path}{$name}.ogv{$query}</a>
 			</p>
 		";

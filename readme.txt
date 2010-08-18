@@ -1,12 +1,12 @@
 === External "Video for Everybody" ===
 Contributors: kwiliarty
 Donate link: none
-Tags: video, html5, ogg, theora, flash
+Tags: video, html5, ogg, theora, flash, webm, vp8
 Requires at least: 2.8
-Tested up to: 2.9.2
+Tested up to: 3.0.1
 Stable tag: 0.7.1
 
-Delivers ogg/theora html5 video from an external storage location with fallbacks to flash, and links for download.
+Delivers ogg/theora (and optional webm) html5 video from an external storage location with fallbacks to flash, and links for download.
 
 == Description ==
 
@@ -17,13 +17,12 @@ and it does not create the media files.**
 *External "Video for Everybody"* is a WordPress plugin that you can use to show
 videos on your WordPress site. You enter a simple shortcode on your page, and
 the plugin generates the HTML to deliver the media. Browsers that understand
-the HTML5 tag will display MPEG/H.264 (.mp4) files or Ogg/Theora (.ogv) files. Other browsers can use Flash to play the .mp4. In all cases, the
+the HTML5 tag will display MPEG/H.264 (.mp4) files, VP8/webm (.webm), or Ogg/Theora (.ogv) files. Other browsers can use Flash to play the .mp4. In all cases, the
 markup includes links to download the media files. The HTML used here diverges
 only slightly from the [Video for
 Everybody](http://camendesign.com/code/video_for_everybody) model. See that site for fuller details.
 
 * I add a class attribute to the tag to make it available for CSS styling
-* I have not yet incorporated WebM support
 
 This plugin is not for everybody, even if the video tries to be. If I were not
 writing my own plugin, I would probably be using the [Degradable HTML5 audio
@@ -70,7 +69,7 @@ Finally, I wanted to have a settings page so that I could spare myself the troub
 Ultimately it's for myself. I created the External "Video for Everybody"
 plugin to suit my own priorities, but I also tried to put it together in a way
 that would make it useful for and usable by others, and I am happy to share
-it. I host my video outside my WordPress site. I want to use HTML5 and Ogg.
+it. I host my video outside my WordPress site. I want to use HTML5 and Ogg and to experiment with Webm.
 So... *External "Video for Everybody"*
 
 = Are you offering support for this plugin? =
@@ -85,13 +84,17 @@ The [Miro Video Converter](http://www.mirovideoconverter.com/) is a handy free a
 
 You might also be interested in trying a [shell
 script](http://kevinwiliarty.com/dokuwiki/doku.php/open/vfe_bash_script) I use to convert videos
-for myself.
+for myself. The shell script depends on your having certain command-line
+tools installed on your computer: ffmpeg, ffmpeg2theora, qtfaststart.py
 
 == Screenshots ==
 
 1. options-page.png
 
 == Upgrade Notice ==
+
+= 0.8 =
+Adds Webm handling for video display and for the downloads list
 
 = 0.7.1 =
 Fixes a minor bug in the line that calls the poster image for the embedded Flash object.
@@ -127,6 +130,7 @@ extension).
 * path (URL to the folder where you host your video files)
 * query (to follow the file name in the URL; should start with "?")
 * include_poster (set to "true" to include a poster attribute in the video tag)
+* webm_download (include a link to a webm file in the list of downloads)
 * poster_extension (png, jpg, or gif)
 * swf_file (The address to your Flash player)
 
@@ -136,6 +140,10 @@ See the plugin home page for more details:
 http://open.pages.kevinwiliarty.com/external-video-for-everybody/
 
 == Changelog ==
+
+= 0.8 =
+* Adds support for webm video playback
+* Adds a global option as well as a shortcode attribute to include a .webm file in the automatically generated list of videos for download.
 
 = 0.7.1 =
 * Fixes a minor bug in the line that calls the poster image for the embedded Flash object. 
