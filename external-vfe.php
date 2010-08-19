@@ -3,7 +3,7 @@
 Plugin Name: External "Video for Everybody"
 Plugin URI: http://open.pages.kevinwiliarty.com/external-video-for-everybody/
 Description: Use the "Video for Everybody" code (v0.4.1--http://camendesign.com/code/video_for_everybody) to display ogg/theora, MPEG/h.264 or VP8/webm video on browsers that support the html5 &lt;video&gt; tag while falling back to Flash (h.264) on browsers that do not.
-Version: 0.8
+Version: 0.9
 Author: Kevin Wiliarty
 Author URI: http://open.pages.kevinwiliarty.com/
 */
@@ -25,6 +25,11 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+//stage the loading of the javascript
+$plugin_name = basename(__FILE__);
+$base_folder = str_replace( $plugin_name, "", plugin_basename(__FILE__));
+$plugin_folder = WP_PLUGIN_URL . '/' . $base_folder;	
+wp_enqueue_script( 'evfe-helper' , $plugin_folder . 'evfe-helper.js' );
 
 //whitelist and sanitize file extension for poster images
 function sanitize_image_extension( $input ) {
@@ -186,7 +191,7 @@ function external_vfe_func( $atts ) {
 		//render the html to display the video
 		return "
 			<!-- based on 'Video for Everybody' v0.4.1 by Kroc Camen of Camen Design -->
-			<video class='external-vfe' width='{$width}' height='{$height}' {$poster} controls preload='none'>
+			<video class='external-vfe' width='{$width}' height='{$height}' {$poster} controls preload='none' onload='evfeTest(this)'>
 				<source src='{$path}{$name}.mp4{$query}' type='video/mp4' />
 				<source src='{$path}{$name}.webm{$query}' type='video/webm' />
 				<source src='{$path}{$name}.ogv{$query}' type='video/ogg' />
