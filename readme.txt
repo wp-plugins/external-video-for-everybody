@@ -4,7 +4,7 @@ Donate link: none
 Tags: video, html5, ogg, theora, flash, webm, vp8
 Requires at least: 2.8
 Tested up to: 3.0.1
-Stable tag: 0.7.1
+Stable tag: 0.8
 
 Delivers ogg/theora (and optional webm) html5 video from an external storage location with fallbacks to flash, and links for download.
 
