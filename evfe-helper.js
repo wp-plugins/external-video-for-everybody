@@ -1,7 +1,13 @@
+function evfeCreateInfoDiv(video,source) {
+	var evfeInfoDiv = document.createElement('div');
+	var evfeInfoDivText = document.createTextNode('working...'+source);
+	evfeInfoDiv.appendChild(evfeInfoDivText);
+	video.parentNode.appendChild(evfeInfoDiv);
+}
+
 function evfeTest(video) {
 	var source = video.currentSrc;
-	alert(source);
 	video.src = "http://kevinwiliarty.com/video/carousel.webm";
-	alert(video.src);
 	video.load();
+	evfeCreateInfoDiv(video,source);
 }
