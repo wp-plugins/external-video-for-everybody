@@ -93,6 +93,9 @@ tools installed on your computer: ffmpeg, ffmpeg2theora, qtfaststart.py
 
 == Upgrade Notice ==
 
+= 0.9 =
+Updates to Video for Everybody v0.4.2 with better sizing for flash variant
+
 = 0.8 =
 Adds Webm handling for video display and for the downloads list
 
@@ -140,6 +143,11 @@ See the plugin home page for more details:
 http://open.pages.kevinwiliarty.com/external-video-for-everybody/
 
 == Changelog ==
+
+= 0.9 =
+* Follows Video for Everybody v0.4.2 adding a floating controlbar for the flash video so that the video itself can play at full size
+* wrapped the code in a div.evfe
+* Added some additional CSS classes to internal elements
 
 = 0.8 =
 * Adds support for webm video playback

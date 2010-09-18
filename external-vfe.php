@@ -29,7 +29,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 $plugin_name = basename(__FILE__);
 $base_folder = str_replace( $plugin_name, "", plugin_basename(__FILE__));
 $plugin_folder = WP_PLUGIN_URL . '/' . $base_folder;	
-wp_enqueue_script( 'evfe-helper' , $plugin_folder . 'evfe-helper.js' );
+if (!is_admin()) {
+	wp_enqueue_script( 
+		'evfe-helper' , 
+		$plugin_folder . 'evfe-helper.js' ,
+		array( 'jquery' ) 
+	);
+}
 
 //whitelist and sanitize file extension for poster images
 function sanitize_image_extension( $input ) {
@@ -183,29 +189,34 @@ function external_vfe_func( $atts ) {
 	//link to download a webm file
 	$webm_link = "";
 	if ( $webm_download == "true" ) {
-		$webm_link = "<a href='{$path}{$name}.webm{$query}'>{$path}{$name}.webm{$query}</a><br />";
+		$webm_link = "<a class='webm-link' href='{$path}{$name}.webm{$query}'>{$path}{$name}.webm{$query}</a><br />";
 	}
 
 	//if a value for name has been provided
 	if ( $name != 'no name' ) {
 		//render the html to display the video
 		return "
-			<!-- based on 'Video for Everybody' v0.4.1 by Kroc Camen of Camen Design -->
-			<video class='external-vfe' width='{$width}' height='{$height}' {$poster} controls preload='none' onload='evfeTest(this)'>
+			<div class='evfe'>
+			<!-- ================================================ -->
+			<!-- based on 'Video for Everybody' v0.4.2 by Kroc Camen of Camen Design -->
+			<!-- <camendesign.com/code/video_for_everybody> -->
+			<!-- ================================================ -->
+			<video class='external-vfe' width='{$width}' height='{$height}' {$poster} controls preload='none'>
 				<source src='{$path}{$name}.mp4{$query}' type='video/mp4' />
 				<source src='{$path}{$name}.webm{$query}' type='video/webm' />
 				<source src='{$path}{$name}.ogv{$query}' type='video/ogg' />
 				<object width='{$width}' height='{$height}' type='application/x-shockwave-flash' data='{$swf_file}'>
 					<param name='movie' value='{$swf_file}' />
-					<param name='flashvars' value='image={$path}{$name}.{$poster_extension}{$query}&file={$path}{$name}.mp4{$query}' />
+					<param name='flashvars' value='controlbar=over&amp;image={$path}{$name}.{$poster_extension}{$query}&amp;file={$path}{$name}.mp4{$query}' />
 					<img src='{$path}{$name}.{$poster_extension}{$query}' width='{$width}' height='{$height}' alt='movie: {$name}'
 						 title='No video playback capabilities, please download the video below' />
 				</object>
 			</video>
-			<p>Downloads: <br />
-			<a href='{$path}{$name}.mp4{$query}'>{$path}{$name}.mp4{$query}</a><br />{$webm_link}
-			<a href='{$path}{$name}.ogv{$query}'>{$path}{$name}.ogv{$query}</a>
+			<p class='external-vfe-downloads'>Downloads: <br />
+			<a class='mp4-link' href='{$path}{$name}.mp4{$query}'>{$path}{$name}.mp4{$query}</a><br />{$webm_link}
+			<a class='ogg-link' href='{$path}{$name}.ogv{$query}'>{$path}{$name}.ogv{$query}</a>
 			</p>
+			</div>
 		";
 	}
 }
