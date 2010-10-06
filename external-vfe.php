@@ -31,10 +31,9 @@ function evfe_video_js_css() {
 	$plugin_name = basename(__FILE__);
 	$base_folder = str_replace( $plugin_name, "", plugin_basename(__FILE__));
 	$plugin_folder = WP_PLUGIN_URL . '/' . $base_folder;
-	if ( !file_exists( $plugin_folder . 'video-js/video-js.css' ) ) {
-		wp_register_style( 'evfe-video-js' , $plugin_folder . 'video-js/video-js.css' );
-		wp_enqueue_style( 'evfe-video-js' );
-	}
+	$video_js_css_file = $plugin_folder . 'video-js/video-js.css';
+	wp_register_style( 'evfe-video-js' , $video_js_css_file );
+	wp_enqueue_style( 'evfe-video-js' );
 }
 
 add_action( 'init' , 'evfe_video_js_css' );
