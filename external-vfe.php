@@ -25,17 +25,53 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-//stage the loading of the javascript
-$plugin_name = basename(__FILE__);
-$base_folder = str_replace( $plugin_name, "", plugin_basename(__FILE__));
-$plugin_folder = WP_PLUGIN_URL . '/' . $base_folder;	
-if (!is_admin()) {
-	wp_enqueue_script( 
-		'evfe-helper' , 
-		$plugin_folder . 'evfe-helper.js' ,
-		array( 'jquery' ) 
-	);
+//register and enqueue the video-js style sheet
+function evfe_video_js_css() {
+	//set up the path variables
+	$plugin_name = basename(__FILE__);
+	$base_folder = str_replace( $plugin_name, "", plugin_basename(__FILE__));
+	$plugin_folder = WP_PLUGIN_URL . '/' . $base_folder;
+	if ( !file_exists( $plugin_folder . 'video-js/video-js.css' ) ) {
+		wp_register_style( 'evfe-video-js' , $plugin_folder . 'video-js/video-js.css' );
+		wp_enqueue_style( 'evfe-video-js' );
+	}
 }
+
+add_action( 'init' , 'evfe_video_js_css' );
+
+//stage the loading of the javascript files
+function evfe_init() {
+	//set up the path variables
+	$plugin_name = basename(__FILE__);
+	$base_folder = str_replace( $plugin_name, "", plugin_basename(__FILE__));
+	$plugin_folder = WP_PLUGIN_URL . '/' . $base_folder;
+	
+	//register video.js
+	wp_register_script( 'video-js' , $plugin_folder . 'video-js/video.js' );
+
+	//enqueue video.js
+	if (!is_admin()) {
+		wp_enqueue_script(
+			'video-js' ,
+			$plugin_folder . 'video-js/video.js' 
+		);
+	}
+	
+	//register evfe-helper.js
+	wp_register_script( 'evfe-helper' , $plugin_folder . 'evfe-helper.js' );
+
+	//enqueue evfe-helper.js
+	if (!is_admin()) {
+		wp_enqueue_script( 
+			'evfe-helper' , 
+			$plugin_folder . 'evfe-helper.js' ,
+			array( 'jquery' , 'video-js' ) 
+		);
+	}
+}
+
+//hook the init function
+add_action( 'init' , 'evfe_init' );
 
 //whitelist and sanitize file extension for poster images
 function sanitize_image_extension( $input ) {
@@ -196,12 +232,12 @@ function external_vfe_func( $atts ) {
 	if ( $name != 'no name' ) {
 		//render the html to display the video
 		return "
-			<div class='evfe'>
+			<div class='evfe video-js-box'>
 			<!-- ================================================ -->
 			<!-- based on 'Video for Everybody' v0.4.2 by Kroc Camen of Camen Design -->
 			<!-- <camendesign.com/code/video_for_everybody> -->
 			<!-- ================================================ -->
-			<video class='external-vfe' width='{$width}' height='{$height}' {$poster} controls preload='none'>
+			<video class='external-vfe video-js' width='{$width}' height='{$height}' {$poster} controls preload='none'>
 				<source src='{$path}{$name}.mp4{$query}' type='video/mp4' />
 				<source src='{$path}{$name}.webm{$query}' type='video/webm' />
 				<source src='{$path}{$name}.ogv{$query}' type='video/ogg' />

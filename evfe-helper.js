@@ -1,3 +1,6 @@
+//Add VideoJS to all video tags on the page when the DOM is ready
+VideoJS.setupAllWhenReady();
+	         
 //jQuery(document).ready(function($) {
 //		// $() will work as an alias for jQuery() within the function
 //		$("video").after("<button class='evfe'>do stuff</button>");
