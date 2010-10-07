@@ -1,19 +1,27 @@
 /*** adjustments for video-js ***/
 
-.entry ul.vjs-controls ul {
+ul.vjs-controls ul {
 margin: 5px 0 0 0;
 padding: 0 0 0 5px;
 }
 
-.entry ul.vjs-controls ul.vjs-progress-holder {
+ul.vjs-controls li.vjs-time-control {
+letter-spacing: 0px;
+}
+
+ul.vjs-controls li:before {
+content: none;
+}
+
+ul.vjs-controls ul.vjs-progress-holder {
 margin: 7px 0 0 5px;
 }
 
-.entry ul.vjs-controls ul.vjs-progress-holder {
+ul.vjs-controls ul.vjs-progress-holder {
 padding: 0;
 }
 
-.entry ul.vjs-controls li.vjs-load-progress,
-.entry ul.vjs-controls li.vjs-play-progress {
+ul.vjs-controls li.vjs-load-progress,
+ul.vjs-controls li.vjs-play-progress {
 margin: 0;
 }
