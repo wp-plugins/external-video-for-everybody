@@ -32,8 +32,11 @@ function evfe_video_js_css() {
 	$base_folder = str_replace( $plugin_name, "", plugin_basename(__FILE__));
 	$plugin_folder = WP_PLUGIN_URL . '/' . $base_folder;
 	$video_js_css_file = $plugin_folder . 'video-js/video-js.css';
+	$video_js_helper_css = $plugin_folder . 'evfe-video-js.css';
 	wp_register_style( 'evfe-video-js' , $video_js_css_file );
 	wp_enqueue_style( 'evfe-video-js' );
+	wp_register_style( 'evfe-video-js-helper' , $video_js_helper_css , 'evfe-video-js' );
+	wp_enqueue_style( 'evfe-video-js-helper' );
 }
 
 add_action( 'init' , 'evfe_video_js_css' );

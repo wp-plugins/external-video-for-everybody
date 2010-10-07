@@ -1,0 +1,19 @@
+/*** adjustments for video-js ***/
+
+.entry ul.vjs-controls ul {
+margin: 5px 0 0 0;
+padding: 0 0 0 5px;
+}
+
+.entry ul.vjs-controls ul.vjs-progress-holder {
+margin: 7px 0 0 5px;
+}
+
+.entry ul.vjs-controls ul.vjs-progress-holder {
+padding: 0;
+}
+
+.entry ul.vjs-controls li.vjs-load-progress,
+.entry ul.vjs-controls li.vjs-play-progress {
+margin: 0;
+}

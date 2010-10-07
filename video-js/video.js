@@ -577,8 +577,9 @@ var VideoJS = JRClass.extend({
 
   onVideoMouseMove: function(event){
     this.showController();
-    clearInterval(this.mouseMoveTimeout);
-    this.mouseMoveTimeout = setTimeout(function(){ this.hideController(); }.context(this), 4000);
+	//uncomment two lines below to hide controls after four seconds
+    //clearInterval(this.mouseMoveTimeout);
+    //this.mouseMoveTimeout = setTimeout(function(){ this.hideController(); }.context(this), 4000);
   },
 
   onVideoMouseOut: function(event){
