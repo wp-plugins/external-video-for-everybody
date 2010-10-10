@@ -135,6 +135,8 @@ function register_external_vfe_settings() {
 	register_setting( 'external-vfe-group', 'evfe_query', 'sanitize_query_string' );
 	//include webm file in the list of downloads
 	register_setting( 'external-vfe-group' , 'evfe_webm_download' , 'sanitize_checkbox' );
+	//use VideoJS controls by default
+	register_setting( 'external-vfe-group' , 'evfe_vjs_default' , 'sanitize_checkbox' );
 }
 
 //function to create options page
@@ -170,7 +172,6 @@ function external_vfe_options() {
 					<td><input type='checkbox' name='evfe_include_poster' value='true' <?php if ( get_option( 'evfe_include_poster' ) == "true" ) {echo "checked='yes' ";} ?>/></td>
 					<td>Posters must be disabled to allow iPad playback.</td>
 				</tr>
-				</tr>
 				<tr valign='top'>
 					<th scope='row' style='text-align:right;'>webm_download:</th>
 					<td><input type='checkbox' name='evfe_webm_download' value='true' <?php if ( get_option( 'evfe_webm_download' ) == "true" ) {echo "checked='yes' ";} ?>/></td>
@@ -185,6 +186,11 @@ function external_vfe_options() {
 					<th scope='row' style='text-align:right;'>swf_file:</th>
 					<td><input style='width:auto;' type='text' name='evfe_swf_file' value='<?php echo get_option( 'evfe_swf_file' ); ?>' /></td>
 					<td>URL for a flash player. (You can get a copy of the <a target='_blank' href='http://www.longtailvideo.com/players/jw-flv-player/'>JW Player</a> and put it somewhere on your site, for instance.)</td>
+				</tr>
+				<tr valign='top'>
+					<th scope='row' style='text-align:right;'>vjs_default:</th>
+					<td><input type='checkbox' name='evfe_vjs_default' value='true' <?php if ( get_option( 'evfe_vjs_default' ) == "true" ) {echo "checked='yes' ";} ?>/></td>
+					<td>Use <a href='http://videojs.com' target='_blank'>VideoJS</a> to provide custom controls by default.</td>
 				</tr>
 			</table>
 			<p class='submit'>
@@ -210,6 +216,7 @@ function external_vfe_func( $atts ) {
 				'width' => get_option( 'evfe_width' ),
 				'include_poster' => get_option( 'evfe_include_poster' ),
 				'webm_download' => get_option( 'evfe_webm_download' ),
+				'vjs' => get_option( 'evfe_vjs_default' ),
 			), 
 			$atts
 		)
@@ -227,16 +234,24 @@ function external_vfe_func( $atts ) {
 		$webm_link = "<a class='webm-link' href='{$path}{$name}.webm{$query}'>{$path}{$name}.webm{$query}</a><br />";
 	}
 
+	//use VideoJS to style the video controls
+	$vjs_div = "";
+	$vjs_video = "";
+	if ( $vjs == "true" ) {
+		$vjs_div = " video-js-box";
+		$vjs_video = " video-js";
+	}	
+
 	//if a value for name has been provided
 	if ( $name != 'no name' ) {
 		//render the html to display the video
 		return "
-			<div class='evfe video-js-box'>
+			<div class='evfe{$vjs_div}'>
 			<!-- ================================================ -->
 			<!-- based on 'Video for Everybody' v0.4.2 by Kroc Camen of Camen Design -->
 			<!-- <camendesign.com/code/video_for_everybody> -->
 			<!-- ================================================ -->
-			<video class='external-vfe video-js' width='{$width}' height='{$height}' {$poster} controls preload='none'>
+			<video class='external-vfe{$vjs_video}' width='{$width}' height='{$height}' {$poster} controls preload='none'>
 				<source src='{$path}{$name}.mp4{$query}' type='video/mp4' />
 				<source src='{$path}{$name}.webm{$query}' type='video/webm' />
 				<source src='{$path}{$name}.ogv{$query}' type='video/ogg' />
