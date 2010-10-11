@@ -5,10 +5,3 @@ VideoJS.setupAllWhenReady({
 	});
 	         
 
-//function evfeCreateInfoDiv(video,source) {
-//	var evfeInfoDiv = document.createElement('div');
-//	var evfeInfoDivText = document.createTextNode('working...'+source);
-//	evfeInfoDiv.appendChild(evfeInfoDivText);
-//	video.parentNode.appendChild(evfeInfoDiv);
-//}
-//

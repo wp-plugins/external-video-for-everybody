@@ -25,52 +25,57 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-//register and enqueue the video-js style sheet
-function evfe_video_js_css() {
-	//set up the path variables
-	$plugin_name = basename(__FILE__);
-	$base_folder = str_replace( $plugin_name, "", plugin_basename(__FILE__));
-	$plugin_folder = WP_PLUGIN_URL . '/' . $base_folder;
-	$video_js_css_file = $plugin_folder . 'video-js/video-js.css';
-	wp_register_style( 'evfe-video-js' , $video_js_css_file );
-	wp_enqueue_style( 'evfe-video-js' );
-}
+//load the VideoJS library only if not disabled
+if ( get_option( 'evfe_disable_vjs' ) != "true" ) {
 
-add_action( 'init' , 'evfe_video_js_css' );
-
-//stage the loading of the javascript files
-function evfe_init() {
-	//set up the path variables
-	$plugin_name = basename(__FILE__);
-	$base_folder = str_replace( $plugin_name, "", plugin_basename(__FILE__));
-	$plugin_folder = WP_PLUGIN_URL . '/' . $base_folder;
-	
-	//register video.js
-	wp_register_script( 'video-js' , $plugin_folder . 'video-js/video.js' );
-
-	//enqueue video.js
-	if (!is_admin()) {
-		wp_enqueue_script(
-			'video-js' ,
-			$plugin_folder . 'video-js/video.js' 
-		);
+	//register and enqueue the video-js style sheet
+	function evfe_video_js_css() {
+		//set up the path variables
+		$plugin_name = basename(__FILE__);
+		$base_folder = str_replace( $plugin_name, "", plugin_basename(__FILE__));
+		$plugin_folder = WP_PLUGIN_URL . '/' . $base_folder;
+		$video_js_css_file = $plugin_folder . 'video-js/video-js.css';
+		wp_register_style( 'evfe-video-js' , $video_js_css_file );
+		wp_enqueue_style( 'evfe-video-js' );
 	}
-	
-	//register evfe-helper.js
-	wp_register_script( 'evfe-helper' , $plugin_folder . 'evfe-helper.js' );
 
-	//enqueue evfe-helper.js
-	if (!is_admin()) {
-		wp_enqueue_script( 
-			'evfe-helper' , 
-			$plugin_folder . 'evfe-helper.js' ,
-			array( 'jquery' , 'video-js' ) 
-		);
+	add_action( 'init' , 'evfe_video_js_css' );
+
+	//stage the loading of the javascript files
+	function evfe_init() {
+		//set up the path variables
+		$plugin_name = basename(__FILE__);
+		$base_folder = str_replace( $plugin_name, "", plugin_basename(__FILE__));
+		$plugin_folder = WP_PLUGIN_URL . '/' . $base_folder;
+		
+		//register video.js
+		wp_register_script( 'video-js' , $plugin_folder . 'video-js/video.js' );
+
+		//enqueue video.js
+		if (!is_admin()) {
+			wp_enqueue_script(
+				'video-js' ,
+				$plugin_folder . 'video-js/video.js' 
+			);
+		}
+		
+		//register evfe-helper.js
+		wp_register_script( 'evfe-helper' , $plugin_folder . 'evfe-helper.js' );
+
+		//enqueue evfe-helper.js
+		if (!is_admin()) {
+			wp_enqueue_script( 
+				'evfe-helper' , 
+				$plugin_folder . 'evfe-helper.js' ,
+				array( 'jquery' , 'video-js' ) 
+			);
+		}
 	}
-}
 
-//hook the init function
-add_action( 'init' , 'evfe_init' );
+	//hook the init function
+	add_action( 'init' , 'evfe_init' );
+
+}
 
 //whitelist and sanitize file extension for poster images
 function sanitize_image_extension( $input ) {
@@ -137,6 +142,8 @@ function register_external_vfe_settings() {
 	register_setting( 'external-vfe-group' , 'evfe_webm_download' , 'sanitize_checkbox' );
 	//use VideoJS controls by default
 	register_setting( 'external-vfe-group' , 'evfe_vjs_default' , 'sanitize_checkbox' );
+	//disable VideoJS to prevent loading of JavaScript and style sheet
+	register_setting( 'external-vfe-group' , 'evfe_disable_vjs' , 'sanitize_checkbox' );
 }
 
 //function to create options page
@@ -191,6 +198,11 @@ function external_vfe_options() {
 					<th scope='row' style='text-align:right;'>vjs_default:</th>
 					<td><input type='checkbox' name='evfe_vjs_default' value='true' <?php if ( get_option( 'evfe_vjs_default' ) == "true" ) {echo "checked='yes' ";} ?>/></td>
 					<td>Use <a href='http://videojs.com' target='_blank'>VideoJS</a> to provide custom controls by default.</td>
+				</tr>
+				<tr valign='top'>
+					<th scope='row' style='text-align:right;'>disable_vjs:</th>
+					<td><input type='checkbox' name='evfe_disable_vjs' value='true' <?php if ( get_option( 'evfe_disable_vjs' ) == "true" ) {echo "checked='yes' ";} ?>/></td>
+					<td>Checking this box will disable the VideoJS library entirely and prevent the loading of the associated JavaScript and CSS files.</td>
 				</tr>
 			</table>
 			<p class='submit'>

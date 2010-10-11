@@ -1,7 +1,7 @@
 === External "Video for Everybody" ===
 Contributors: kwiliarty
 Donate link: none
-Tags: video, html5, ogg, theora, flash, webm, vp8
+Tags: video, html5, ogg, theora, flash, webm, vp8, videojs
 Requires at least: 2.8
 Tested up to: 3.0.1
 Stable tag: 0.8
@@ -18,11 +18,13 @@ and it does not create the media files.**
 videos on your WordPress site. You enter a simple shortcode on your page, and
 the plugin generates the HTML to deliver the media. Browsers that understand
 the HTML5 tag will display MPEG/H.264 (.mp4) files, VP8/webm (.webm), or Ogg/Theora (.ogv) files. Other browsers can use Flash to play the .mp4. In all cases, the
-markup includes links to download the media files. The HTML used here diverges
-only slightly from the [Video for
+markup includes links to download the media files. The HTML comes with 
+only minor variations straight from the [Video for
 Everybody](http://camendesign.com/code/video_for_everybody) model. See that site for fuller details.
 
-* I add a class attribute to the tag to make it available for CSS styling
+With the latest release users can now optionally use the 
+[VideoJS](http://videojs.com) JavaScript library to outfit their videos 
+with an attractive set of controls that includes a full screen option. 
 
 This plugin is not for everybody, even if the video tries to be. If I were not
 writing my own plugin, I would probably be using the [Degradable HTML5 audio
@@ -31,11 +33,11 @@ Everybody](http://camendesign.com/code/video_for_everybody)
 approach. I also offer an options page where you can define site-wide default paths and dimensions. The defaults can be overridden in any particular shortcode, but if most of your video resides in the same place and has consistent dimensions, site-wide defaults keep the shortcodes simple. Soukenik's
 shortcodes give you more control over playback options.
 
-**Important:** The Safari browser will autobuffer the media files you link to using this
+**Important:** Unless you use VideoJS, the Safari browser will autobuffer 
+the media files you link to using this
 plugin. Depending on how many movies you serve on a single page, and on how
 large they are, autobuffering can significantly slow your clients' browsers,
-and it can also hit your bandwidth. Please bear this in mind when considering
-use of this plugin.
+and it can also hit your bandwidth. 
 
 For a discussion of autobuffering in html5 see:
 http://daringfireball.net/2009/12/html5_video_unusable
@@ -94,7 +96,7 @@ tools installed on your computer: ffmpeg, ffmpeg2theora, qtfaststart.py
 == Upgrade Notice ==
 
 = 0.9 =
-Updates to Video for Everybody v0.4.2 with better sizing for flash variant
+Updates to Video for Everybody v0.4.2 with better sizing for flash variant. Includes new option to use VideoJS library.
 
 = 0.8 =
 Adds Webm handling for video display and for the downloads list
@@ -136,8 +138,13 @@ extension).
 * webm_download (include a link to a webm file in the list of downloads)
 * poster_extension (png, jpg, or gif)
 * swf_file (The address to your Flash player)
+* vjs (set to "true" to provide attractive video controls with full screen option)
 
-All of these can also be set as defaults.
+All of the above can also be set as defaults on the options page under:
+Media > External VfE
+
+The options page also includes one parameter that cannot be overridden for 
+an individual video: the ability to disable VideoJS so that the JavaScript and the style sheet will not load at all. 
 
 See the plugin home page for more details:
 http://open.pages.kevinwiliarty.com/external-video-for-everybody/
@@ -146,8 +153,10 @@ http://open.pages.kevinwiliarty.com/external-video-for-everybody/
 
 = 0.9 =
 * Follows Video for Everybody v0.4.2 adding a floating controlbar for the flash video so that the video itself can play at full size
-* wrapped the code in a div.evfe
-* Added some additional CSS classes to internal elements
+* wraps each video element in a div.evfe
+* Adds some additional CSS classes to internal elements
+* Adds a global setting and shortcode option to skin videos with the default flavor of Steve Heffernan's VideoJS JavaScript library (with minor modification to ease the style integration with a wider variety of WordPress themes)
+* Includes an option to disable VideoJS entirely so as to prevent the loading of unwanted JavaScript and CSS files
 
 = 0.8 =
 * Adds support for webm video playback
