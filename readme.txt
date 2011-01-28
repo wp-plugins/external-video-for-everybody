@@ -3,7 +3,7 @@ Contributors: kwiliarty
 Donate link: none
 Tags: video, html5, ogg, theora, flash, webm, vp8, videojs
 Requires at least: 2.8
-Tested up to: 3.0.1
+Tested up to: 3.0.4
 Stable tag: 0.9
 
 Delivers ogg/theora (and optional webm) html5 video from an external storage location with fallbacks to flash, and links for download.
@@ -33,11 +33,11 @@ Everybody](http://camendesign.com/code/video_for_everybody)
 approach. I also offer an options page where you can define site-wide default paths and dimensions. The defaults can be overridden in any particular shortcode, but if most of your video resides in the same place and has consistent dimensions, site-wide defaults keep the shortcodes simple. Soukenik's
 shortcodes give you more control over playback options.
 
-**Important:** Unless you use VideoJS, the Safari browser will autobuffer 
-the media files you link to using this
-plugin. Depending on how many movies you serve on a single page, and on how
-large they are, autobuffering can significantly slow your clients' browsers,
-and it can also hit your bandwidth. 
+**Important:** Preloading (autobuffering) preferences are supported unevenly 
+across browers and versions of browsers. Safari seems to have improved in that 
+regard, but Chrome has not. Depending on how many movies you serve on a single 
+page, and on how large they are, autobuffering can significantly slow your 
+clients' browsers, and it can also hit your bandwidth. 
 
 For a discussion of autobuffering in html5 see:
 http://daringfireball.net/2009/12/html5_video_unusable
@@ -95,6 +95,9 @@ tools installed on your computer: ffmpeg, ffmpeg2theora, qtfaststart.py
 
 == Upgrade Notice ==
 
+= 0.9.1 =
+Updates VideoJS library to 2.0.2
+
 = 0.9 =
 Updates to Video for Everybody v0.4.2 with better sizing for flash variant. Includes new option to use VideoJS library.
 
@@ -150,6 +153,10 @@ See the plugin home page for more details:
 http://open.pages.kevinwiliarty.com/external-video-for-everybody/
 
 == Changelog ==
+
+= 0.9.1 =
+* Updates VideoJS library to 2.0.2
+* Moves the download links outside the main video div so that they will not be hidden by VideoJS
 
 = 0.9 =
 * Follows Video for Everybody v0.4.2 adding a floating controlbar for the flash video so that the video itself can play at full size
