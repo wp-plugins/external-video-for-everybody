@@ -154,6 +154,9 @@ http://open.pages.kevinwiliarty.com/external-video-for-everybody/
 
 == Changelog ==
 
+= 0.9.2 =
+* Brand new installations will include posters by default. Existing installations will retain existing preference.
+
 = 0.9.1 =
 * Updates VideoJS library to 2.0.2
 * Moves the download links outside the main video div so that they will not be hidden by VideoJS
