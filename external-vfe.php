@@ -3,7 +3,7 @@
 Plugin Name: External "Video for Everybody"
 Plugin URI: http://open.pages.kevinwiliarty.com/external-video-for-everybody/
 Description: Use the "Video for Everybody" code (v0.4.1--http://camendesign.com/code/video_for_everybody) to display ogg/theora, MPEG/h.264 or VP8/webm video on browsers that support the html5 &lt;video&gt; tag while falling back to Flash (h.264) on browsers that do not.
-Version: 0.9.1
+Version: 0.9.2
 Author: Kevin Wiliarty
 Author URI: http://open.pages.kevinwiliarty.com/
 */
@@ -96,7 +96,7 @@ function sanitize_query_string( $untrusted ) {
 //sanitize checkboxes
 function sanitize_checkbox( $checkbox ) {
 	if ( $checkbox != true ) {
-		$checkbox = "";
+		$checkbox = "false";
 	}
 	return $checkbox;
 }
@@ -120,6 +120,8 @@ function external_vfe_menu() {
 
 //function to register settings
 function register_external_vfe_settings() {
+	//is this a fresh installation?
+	if (!(get_option('evfe_include_poster'))) {$fresh_install = true;}
 	//evfe_path must be url
 	register_setting( 'external-vfe-group', 'evfe_path', 'esc_url' );
 	//evfe_height must be int
@@ -144,6 +146,10 @@ function register_external_vfe_settings() {
 	register_setting( 'external-vfe-group' , 'evfe_vjs_default' , 'sanitize_checkbox' );
 	//disable VideoJS to prevent loading of JavaScript and style sheet
 	register_setting( 'external-vfe-group' , 'evfe_disable_vjs' , 'sanitize_checkbox' );
+	//set initial values
+	if ($fresh_install == true) {
+		update_option( 'evfe_include_poster' , 'true' );
+	}
 }
 
 //function to create options page
