@@ -183,7 +183,7 @@ function external_vfe_options() {
 				<tr valign='top'>
 					<th scope='row' style='text-align:right;'>include_poster:</th>
 					<td><input type='checkbox' name='evfe_include_poster' value='true' <?php if ( get_option( 'evfe_include_poster' ) == "true" ) {echo "checked='yes' ";} ?>/></td>
-					<td>Posters must be disabled to allow iPad playback.</td>
+					<td>Posters must be disabled to allow iPad/iPod playback in iOS3, but the problem has been corrected since iOS4.</td>
 				</tr>
 				<tr valign='top'>
 					<th scope='row' style='text-align:right;'>webm_download:</th>
