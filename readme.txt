@@ -3,7 +3,7 @@ Contributors: kwiliarty
 Donate link: none
 Tags: video, html5, ogg, theora, flash, webm, vp8, videojs
 Requires at least: 2.8
-Tested up to: 3.0.4
+Tested up to: 3.1.1
 Stable tag: 0.9.1
 
 Delivers ogg/theora (and optional webm) html5 video from an external storage location with fallbacks to flash, and links for download.
@@ -22,7 +22,7 @@ markup includes links to download the media files. The HTML comes with
 only minor variations straight from the [Video for
 Everybody](http://camendesign.com/code/video_for_everybody) model. See that site for fuller details.
 
-With the latest release users can now optionally use the 
+Users can optionally use the 
 [VideoJS](http://videojs.com) JavaScript library to outfit their videos 
 with an attractive set of controls that includes a full screen option. 
 
@@ -95,6 +95,10 @@ tools installed on your computer: ffmpeg, ffmpeg2theora, qtfaststart.py
 
 == Upgrade Notice ==
 
+= 0.9.2 =
+Now includes an optional built-in style sheet that is especially useful for
+FireFox 4 if you do not use poster images.
+
 = 0.9.1 =
 Updates VideoJS library to 2.0.2
 
@@ -146,8 +150,11 @@ extension).
 All of the above can also be set as defaults on the options page under:
 Media > External VfE
 
-The options page also includes one parameter that cannot be overridden for 
-an individual video: the ability to disable VideoJS so that the JavaScript and the style sheet will not load at all. 
+The options page also includes two parameters that cannot be overridden for 
+an individual video: 
+
+* the ability to disable VideoJS so that the JavaScript and the style sheet will not load at all 
+* the option to disable the built-in style sheet
 
 See the plugin home page for more details:
 http://open.pages.kevinwiliarty.com/external-video-for-everybody/
@@ -156,6 +163,7 @@ http://open.pages.kevinwiliarty.com/external-video-for-everybody/
 
 = 0.9.2 =
 * Brand new installations will include posters by default. Existing installations will retain existing preference.
+* An optional built-in style sheet will add a frame, a drop-shadow and a background fade so that videos without posters will have a visual presence in FireFox 4.
 
 = 0.9.1 =
 * Updates VideoJS library to 2.0.2

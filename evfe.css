@@ -3,13 +3,11 @@
 
 video.external-vfe {
 
-border: 1px solid #333333;
-
    -moz-box-shadow: 3px 3px 6px #666666; /* FF3.5+ */
 -webkit-box-shadow: 3px 3px 6px #666666; /* Saf3.0+, Chrome */
         box-shadow: 3px 3px 6px #666666; /* FF4, Opera 10.5, IE9, Chrome 10+ */
 
-background-color: #666666;
+background-color: transparent; /* pre-HTML5 IE */
 background-image: -moz-linear-gradient(top, #666666, #cccccc); 
 background-image: -ms-linear-gradient(top, #666666, #cccccc); 
 background-image: -o-linear-gradient(top, #666666, #cccccc); 
