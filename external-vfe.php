@@ -77,6 +77,20 @@ if ( get_option( 'evfe_disable_vjs' ) != "true" ) {
 
 }
 
+//function to register and enqueue evfe stylesheet
+function evfe_css () {
+	//if the built-in style sheet not disabled and this is not an admin page
+	if ( get_option( 'evfe_disable_css' ) != 'true' && !is_admin() ) {
+		//register and enqueue the evfe style sheet
+		$evfe_css = plugins_url( '/evfe.css' , (__FILE__) );
+		wp_register_style( 'evfe-css' , $evfe_css );
+		wp_enqueue_style( 'evfe-css' );
+	}
+}
+
+//add the evfe_css function to the init hook
+add_action( 'init' , 'evfe_css' );
+
 //whitelist and sanitize file extension for poster images
 function sanitize_image_extension( $input ) {
 	//array of allowed extensions
@@ -145,7 +159,9 @@ function register_external_vfe_settings() {
 	//use VideoJS controls by default
 	register_setting( 'external-vfe-group' , 'evfe_vjs_default' , 'sanitize_checkbox' );
 	//disable VideoJS to prevent loading of JavaScript and style sheet
-	register_setting( 'external-vfe-group' , 'evfe_disable_vjs' , 'sanitize_checkbox' );
+	register_setting( 'external-vfe-group' , 'evfe_disable_vjs' , 'sanitize_checkbox' );	
+	//disable built-in style sheet
+	register_setting( 'external-vfe-group' , 'evfe_disable_css' , 'sanitize_checkbox' );
 	//set initial values
 	if ($fresh_install == true) {
 		update_option( 'evfe_include_poster' , 'true' );
@@ -209,6 +225,11 @@ function external_vfe_options() {
 					<th scope='row' style='text-align:right;'>disable_vjs:</th>
 					<td><input type='checkbox' name='evfe_disable_vjs' value='true' <?php if ( get_option( 'evfe_disable_vjs' ) == "true" ) {echo "checked='yes' ";} ?>/></td>
 					<td>Checking this box will disable the VideoJS library entirely and prevent the loading of the associated JavaScript and CSS files.</td>
+				</tr>
+				<tr valign='top'>
+					<th scope='row' style='text-align:right;'>disable_css:</th>
+					<td><input type='checkbox' name='evfe_disable_css' value='true' <?php if ( get_option( 'evfe_disable_css' ) == "true" ) {echo "checked='yes' ";} ?>/></td>
+					<td>Checking this box will disable the plugin's built-in style sheet.</td>
 				</tr>
 			</table>
 			<p class='submit'>
