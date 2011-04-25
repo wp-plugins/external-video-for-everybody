@@ -34,10 +34,9 @@ approach. I also offer an options page where you can define site-wide default pa
 shortcodes give you more control over playback options.
 
 **Important:** Preloading (autobuffering) preferences are supported unevenly 
-across browers and versions of browsers. Safari seems to have improved in that 
-regard, but Chrome has not. Depending on how many movies you serve on a single 
-page, and on how large they are, autobuffering can significantly slow your 
-clients' browsers, and it can also hit your bandwidth. 
+across browers and versions of browsers. Depending on how many movies you 
+serve on a single page, and on how large they are, autobuffering can 
+significantly slow your clients' browsers, and it can also hit your bandwidth. 
 
 For a discussion of autobuffering in html5 see:
 http://daringfireball.net/2009/12/html5_video_unusable
@@ -71,7 +70,7 @@ Finally, I wanted to have a settings page so that I could spare myself the troub
 Ultimately it's for myself. I created the External "Video for Everybody"
 plugin to suit my own priorities, but I also tried to put it together in a way
 that would make it useful for and usable by others, and I am happy to share
-it. I host my video outside my WordPress site. I want to use HTML5 and Ogg and to experiment with Webm.
+it. I host my video outside my WordPress site. I want to use HTML5, Ogg and Webm.
 So... *External "Video for Everybody"*
 
 = Are you offering support for this plugin? =
@@ -85,17 +84,18 @@ The [Theora Cookbook](http://en.flossmanuals.net/TheoraCookbook/) has a lot of i
 The [Miro Video Converter](http://www.mirovideoconverter.com/) is a handy free and opensource utility for this purpose.
 
 You might also be interested in trying a [shell
-script](http://kevinwiliarty.com/dokuwiki/doku.php/open/vfe_bash_script) I use to convert videos
+script](https://github.com/kwiliarty/vfe-sh) I use to convert videos
 for myself. The shell script depends on your having certain command-line
 tools installed on your computer: ffmpeg, ffmpeg2theora, qtfaststart.py
 
 == Screenshots ==
 
-1. options-page.png
+1. External Video for Everybody options page
+2. Drop shadow and gradient background for posterless videos in FireFox 4
 
 == Upgrade Notice ==
 
-= 0.9.2 =
+= 1.0 =
 Now includes an optional built-in style sheet that is especially useful for
 FireFox 4 if you do not use poster images.
 
@@ -161,8 +161,8 @@ http://open.pages.kevinwiliarty.com/external-video-for-everybody/
 
 == Changelog ==
 
-= 0.9.2 =
-* Brand new installations will include posters by default. Existing installations will retain existing preference.
+= 1.0 =
+* Brand new installations will include posters by default. Existing installations will retain existing poster preference.
 * An optional built-in style sheet will add a frame, a drop-shadow and a background fade so that videos without posters will have a visual presence in FireFox 4.
 
 = 0.9.1 =
