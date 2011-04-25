@@ -163,7 +163,7 @@ http://open.pages.kevinwiliarty.com/external-video-for-everybody/
 
 = 1.0 =
 * Brand new installations will include posters by default. Existing installations will retain existing poster preference.
-* An optional built-in style sheet will add a frame, a drop-shadow and a background fade so that videos without posters will have a visual presence in FireFox 4.
+* An optional built-in style sheet will add a drop-shadow and a background gradient so that videos without posters will have a visual presence in FireFox 4.
 
 = 0.9.1 =
 * Updates VideoJS library to 2.0.2
