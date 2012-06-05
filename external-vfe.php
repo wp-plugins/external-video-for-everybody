@@ -276,21 +276,23 @@ function external_vfe_func( $atts ) {
 	//use VideoJS to style the video controls
 	$vjs_div = "";
 	$vjs_video = "";
+	$vjs_data = "";
 	if ( $vjs == "true" ) {
 		$vjs_div = " video-js-box";
-		$vjs_video = " video-js";
+		$vjs_video = " video-js vjs-default-skin";
+		$vjs_data = " data-setup='{}'";
 	}	
 
 	//if a value for name has been provided
 	if ( $name != 'no name' ) {
 		//render the html to display the video
 		return "
-			<div class='evfe{$vjs_div}'>
+			<div class='evfe'>
 			<!-- ================================================ -->
 			<!-- based on 'Video for Everybody' v0.4.2 by Kroc Camen of Camen Design -->
 			<!-- <camendesign.com/code/video_for_everybody> -->
 			<!-- ================================================ -->
-			<video class='external-vfe{$vjs_video}' width='{$width}' height='{$height}' {$poster} controls preload='none'>
+			<video id='id-test' class='external-vfe{$vjs_video}' width='{$width}' height='{$height}' {$poster} controls preload='none'{$vjs_data}>
 				<source src='{$path}{$name}.mp4{$query}' type='video/mp4' />
 				<source src='{$path}{$name}.webm{$query}' type='video/webm' />
 				<source src='{$path}{$name}.ogv{$query}' type='video/ogg' />
