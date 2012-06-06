@@ -134,38 +134,54 @@ function external_vfe_menu() {
 
 //function to register settings
 function register_external_vfe_settings() {
+	
 	//is this a fresh installation?
 	if (!(get_option('evfe_include_poster'))) {$fresh_install = true;}
+
 	//evfe_path must be url
 	register_setting( 'external-vfe-group', 'evfe_path', 'esc_url' );
+
 	//evfe_height must be int
 	register_setting( 'external-vfe-group', 'evfe_height', 'intval' );
+
 	//evfe_width must be int
 	register_setting( 'external-vfe-group', 'evfe_width', 'intval' );
+
 	//whether to include posters in the code
 	register_setting( 'external-vfe-group', 'evfe_include_poster' , 'sanitize_checkbox' );
+
 	//poster image file extension must be whitelisted
 	register_setting(
 		'external-vfe-group', 
 		'evfe_poster_extension', 
 		'sanitize_image_extension'
 	);
+
 	//path to flash player must be url
 	register_setting( 'external-vfe-group', 'evfe_swf_file', 'esc_url' );
+
 	//query portion of links to media assets must be url safe
 	register_setting( 'external-vfe-group', 'evfe_query', 'sanitize_query_string' );
+
+	// file detector will use a checkbox
+	register_setting( 'external-vfe-group' , 'evfe_file_detector' , 'sanitize_checkbox' );
+
 	//include webm file in the list of downloads
 	register_setting( 'external-vfe-group' , 'evfe_webm_download' , 'sanitize_checkbox' );
+	
 	//use VideoJS controls by default
 	register_setting( 'external-vfe-group' , 'evfe_vjs_default' , 'sanitize_checkbox' );
+
 	//disable VideoJS to prevent loading of JavaScript and style sheet
 	register_setting( 'external-vfe-group' , 'evfe_disable_vjs' , 'sanitize_checkbox' );	
 	//disable built-in style sheet
 	register_setting( 'external-vfe-group' , 'evfe_disable_css' , 'sanitize_checkbox' );
+
 	//set initial values
 	if ($fresh_install == true) {
 		update_option( 'evfe_include_poster' , 'true' );
 	}
+
 }
 
 //function to create options page
@@ -175,7 +191,7 @@ function external_vfe_options() {
 		<h2>External VfE Settings</h2>
 		<form method='post' action='options.php'>
 			<?php settings_fields( 'external-vfe-group' ); ?>
-			<table class='form-table' style='width:800px;'>
+			<table class='form-table' style='width:80%;'>
 				<tr valign='top'>
 					<th scope='row' style='text-align:right;'>path:</th>
 					<td><input style='width: 300px;' type='text' name='evfe_path' value='<?php echo get_option( 'evfe_path' ); ?>' /></td>
@@ -205,6 +221,11 @@ function external_vfe_options() {
 					<th scope='row' style='text-align:right;'>webm_download:</th>
 					<td><input type='checkbox' name='evfe_webm_download' value='true' <?php if ( get_option( 'evfe_webm_download' ) == "true" ) {echo "checked='yes' ";} ?>/></td>
 					<td>Check the box to include a webm file in the downloads list.</td>
+				</tr>
+				<tr valign='top'>
+					<th scope='row' style='text-align:right;'>file_detector:</th>
+					<td><input type='checkbox' name='evfe_file_detector' value='true' <?php if ( get_option( 'evfe_file_detector' ) == "true" ) {echo "checked='yes' ";} ?>/></td>
+					<td>The file detector tests whether external video resources exist before including them in the list of sources and downloads. If you always provide all types (.mp4, .webm, .ogv), then you do not need this option. Likewise, if you are not using the VideoJS feature, then you do not really need this feature, either, though it will help the plugin to be smart about which downloads to offer. If your videos are not public, then you definitely should not use this option unless you can set a cookie that will allow your WordPress host to access the videos.</td>
 				</tr>
 				<tr valign='top'>
 					<th scope='row' style='text-align:right;'>poster_extension:</th>
@@ -269,6 +290,7 @@ function external_vfe_func( $atts ) {
 				'width' => get_option( 'evfe_width' ),
 				'include_poster' => get_option( 'evfe_include_poster' ),
 				'webm_download' => get_option( 'evfe_webm_download' ),
+				'file_detector' => get_option( 'evfe_file_detector' ),
 				'vjs' => get_option( 'evfe_vjs_default' ),
 			), 
 			$atts
@@ -297,16 +319,19 @@ function external_vfe_func( $atts ) {
 		$vjs_data = " data-setup='{}'";
 	}	
 
+	// construct URL's and <source> tags
 	$types = array ( 'mp4'=>'mp4' , 'webm'=>'webm' , 'ogv'=>'ogg' );
 	foreach ( $types as $ext => $type ) {
 		$url[$type] = "{$path}{$name}.{$ext}{$query}";
-		$source[$type] = "";
-		$download[$type] = "";
-		$test_url = $url[$type];
-		if ( check_remote_source($test_url) ) {
-			$source[$type] = "\n<source src='{$url[$type]}' type='video/{$type}' />";
-			$download[$type] = "<a class='{$type}-link' href='{$path}{$name}.{$ext}{$query}'>{$path}{$name}.{$ext}{$query}</a><br />";
+		if ( get_option( 'evfe_file_detector') == true ) {
+			$source[$type] = "";
+			$download[$type] = "";
+			if ( !(check_remote_source($url[$type])) ) {
+				continue;
+			}
 		}
+		$source[$type] = "\n<source src='{$url[$type]}' type='video/{$type}' />";
+		$download[$type] = "<a class='{$type}-link' href='{$path}{$name}.{$ext}{$query}'>{$path}{$name}.{$ext}{$query}</a><br />";
 	}
 
 	//if a value for name has been provided
