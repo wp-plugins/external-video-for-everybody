@@ -239,6 +239,20 @@ function external_vfe_options() {
 	</div>
 <?php }
 
+// function to test whether file exists
+function check_remote_source( $url ) {
+
+	$ch = curl_init();
+	curl_setopt( $ch , CURLOPT_URL , $url );
+	curl_setopt( $ch , CURLOPT_NOBODY , 1 );
+	curl_setopt( $ch , CURLOPT_FAILONERROR , 1 );
+	curl_setopt( $ch , CURLOPT_RETURNTRANSFER , 1 );
+
+	if ( curl_exec($ch) !== FALSE ) { return TRUE; }
+	else { return FALSE; }
+
+}
+
 //function to parse shortcode and render video
 function external_vfe_func( $atts ) {
 
@@ -283,6 +297,18 @@ function external_vfe_func( $atts ) {
 		$vjs_data = " data-setup='{}'";
 	}	
 
+	$types = array ( 'mp4'=>'mp4' , 'webm'=>'webm' , 'ogv'=>'ogg' );
+	foreach ( $types as $ext => $type ) {
+		$url[$type] = "{$path}{$name}.{$ext}{$query}";
+		$source[$type] = "";
+		$download[$type] = "";
+		$test_url = $url[$type];
+		if ( check_remote_source($test_url) ) {
+			$source[$type] = "\n<source src='{$url[$type]}' type='video/{$type}' />";
+			$download[$type] = "<a class='{$type}-link' href='{$path}{$name}.{$ext}{$query}'>{$path}{$name}.{$ext}{$query}</a><br />";
+		}
+	}
+
 	//if a value for name has been provided
 	if ( $name != 'no name' ) {
 		//render the html to display the video
@@ -292,10 +318,7 @@ function external_vfe_func( $atts ) {
 			<!-- based on 'Video for Everybody' v0.4.2 by Kroc Camen of Camen Design -->
 			<!-- <camendesign.com/code/video_for_everybody> -->
 			<!-- ================================================ -->
-			<video id='id-test' class='external-vfe{$vjs_video}' width='{$width}' height='{$height}' {$poster} controls preload='none'{$vjs_data}>
-				<source src='{$path}{$name}.mp4{$query}' type='video/mp4' />
-				<source src='{$path}{$name}.webm{$query}' type='video/webm' />
-				<source src='{$path}{$name}.ogv{$query}' type='video/ogg' />
+			<video id='id-test' class='external-vfe{$vjs_video}' width='{$width}' height='{$height}' {$poster} controls preload='none'{$vjs_data}>{$source['mp4']}{$source['webm']}{$source['ogg']}
 				<object width='{$width}' height='{$height}' type='application/x-shockwave-flash' data='{$swf_file}'>
 					<param name='movie' value='{$swf_file}' />
 					<param name='flashvars' value='controlbar=over&amp;image={$path}{$name}.{$poster_extension}{$query}&amp;file={$path}{$name}.mp4{$query}' />
@@ -305,8 +328,9 @@ function external_vfe_func( $atts ) {
 			</video>
 			</div>
 			<p class='external-vfe-downloads'>Downloads: <br />
-			<a class='mp4-link' href='{$path}{$name}.mp4{$query}'>{$path}{$name}.mp4{$query}</a><br />{$webm_link}
-			<a class='ogg-link' href='{$path}{$name}.ogv{$query}'>{$path}{$name}.ogv{$query}</a>
+			{$download['mp4']}
+			{$download['webm']}
+			{$download['ogg']}
 			</p>
 		";
 	}
