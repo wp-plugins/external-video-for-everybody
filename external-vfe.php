@@ -103,7 +103,7 @@ function sanitize_image_extension( $input ) {
 
 //sanitize query string
 function sanitize_query_string( $untrusted ) {
-	$trusted = preg_replace( '/[^a-z0-1?&=;\-~_+%\.]/i' , "" , $untrusted );
+	$trusted = preg_replace( '/[^a-z0-9?&=;\-~_+%\.]/i' , "" , $untrusted );
 	return $trusted;
 }
 
@@ -166,6 +166,9 @@ function register_external_vfe_settings() {
 	// file detector will use a checkbox
 	register_setting( 'external-vfe-group' , 'evfe_file_detector' , 'sanitize_checkbox' );
 
+	// cookie string, validate as a query string (maybe too restrictive)
+	register_setting( 'external-vfe-group' , 'evfe_access_cookie' , 'sanitize_query_string' );
+	
 	//include webm file in the list of downloads
 	register_setting( 'external-vfe-group' , 'evfe_webm_download' , 'sanitize_checkbox' );
 	
@@ -191,7 +194,7 @@ function external_vfe_options() {
 		<h2>External VfE Settings</h2>
 		<form method='post' action='options.php'>
 			<?php settings_fields( 'external-vfe-group' ); ?>
-			<table class='form-table' style='width:80%;'>
+			<table class='form-table' style='width:95%;'>
 				<tr valign='top'>
 					<th scope='row' style='text-align:right;'>path:</th>
 					<td><input style='width: 300px;' type='text' name='evfe_path' value='<?php echo get_option( 'evfe_path' ); ?>' /></td>
@@ -220,12 +223,17 @@ function external_vfe_options() {
 				<tr valign='top'>
 					<th scope='row' style='text-align:right;'>webm_download:</th>
 					<td><input type='checkbox' name='evfe_webm_download' value='true' <?php if ( get_option( 'evfe_webm_download' ) == "true" ) {echo "checked='yes' ";} ?>/></td>
-					<td>Check the box to include a webm file in the downloads list.</td>
+					<td>Check the box to include a webm file in the downloads list. This setting will be ignored if file detection is used.</td>
 				</tr>
 				<tr valign='top'>
 					<th scope='row' style='text-align:right;'>file_detector:</th>
 					<td><input type='checkbox' name='evfe_file_detector' value='true' <?php if ( get_option( 'evfe_file_detector' ) == "true" ) {echo "checked='yes' ";} ?>/></td>
-					<td>The file detector tests whether external video resources exist before including them in the list of sources and downloads. If you always provide all types (.mp4, .webm, .ogv), then you do not need this option. Likewise, if you are not using the VideoJS feature, then you do not really need this feature, either, though it will help the plugin to be smart about which downloads to offer. If your videos are not public, then you definitely should not use this option unless you can set a cookie that will allow your WordPress host to access the videos.</td>
+					<td>The file detector tests whether external video resources exist before including them in the list of sources and downloads. Using this feature can slow loading times. If you always provide all file types (.mp4, .webm, .ogv), then you do not need this feature. Likewise, if you are not using the VideoJS option, then you do not strictly need this feature, either, though it will help the plugin to be smart about which downloads to offer. If your videos are not public, then you definitely should not use this option unless you can set a simple cookie that will allow your WordPress host to access the videos.</td>
+				</tr>
+				<tr valign='top'>
+					<th scope='row' style='text-align:right;'>access_cookie:</th>
+					<td><input type='text' name='evfe_access_cookie' value='<?php echo get_option( 'evfe_access_cookie' ); ?>' /></td>
+					<td>You may be able to use file detection on files that are not fully public. If you know a cookie string that will get you in, enter it here. Relevant only under very narrow circumstances. </td>
 				</tr>
 				<tr valign='top'>
 					<th scope='row' style='text-align:right;'>poster_extension:</th>
@@ -261,13 +269,14 @@ function external_vfe_options() {
 <?php }
 
 // function to test whether file exists
-function check_remote_source( $url ) {
+function check_remote_source( $url , $cookie='' ) {
 
 	$ch = curl_init();
 	curl_setopt( $ch , CURLOPT_URL , $url );
 	curl_setopt( $ch , CURLOPT_NOBODY , 1 );
 	curl_setopt( $ch , CURLOPT_FAILONERROR , 1 );
 	curl_setopt( $ch , CURLOPT_RETURNTRANSFER , 1 );
+	curl_setopt( $ch , CURLOPT_COOKIE , $cookie );
 
 	if ( curl_exec($ch) !== FALSE ) { return TRUE; }
 	else { return FALSE; }
@@ -291,6 +300,7 @@ function external_vfe_func( $atts ) {
 				'include_poster' => get_option( 'evfe_include_poster' ),
 				'webm_download' => get_option( 'evfe_webm_download' ),
 				'file_detector' => get_option( 'evfe_file_detector' ),
+				'access_cookie' => get_option( 'evfe_access_cookie' ),
 				'vjs' => get_option( 'evfe_vjs_default' ),
 			), 
 			$atts
@@ -325,7 +335,7 @@ function external_vfe_func( $atts ) {
 			$source[$type] = "";
 			$download[$type] = "";
 			// if the file does not exist
-			if ( !(check_remote_source($url[$type])) ) {
+			if ( !(check_remote_source($url[$type],$access_cookie)) ) {
 				// go to the next type
 				continue;
 			}

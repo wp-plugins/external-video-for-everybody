@@ -95,6 +95,9 @@ tools installed on your computer: ffmpeg, ffmpeg2theora, qtfaststart.py
 
 == Upgrade Notice ==
 
+= 2.0 =
+Now includes an option to detect remote files and adjust source tags and downloads based on which files are actually available. Integrates VideoJS 3.2.0, including support for captioning.
+
 = 1.0 =
 Now includes an optional built-in style sheet that is especially useful for
 FireFox 4 if you do not use poster images.
@@ -142,6 +145,7 @@ extension).
 * path (URL to the folder where you host your video files)
 * query (to follow the file name in the URL; should start with "?")
 * include_poster (set to "true" to include a poster attribute in the video tag)
+* file_detector (generate source tags and download links only for existing files)
 * webm_download (include a link to a webm file in the list of downloads)
 * poster_extension (png, jpg, or gif)
 * swf_file (The address to your Flash player)
@@ -160,6 +164,11 @@ See the plugin home page for more details:
 http://open.pages.kevinwiliarty.com/external-video-for-everybody/
 
 == Changelog ==
+
+= 2.0 =
+* Optional file detection will generate source tags and download links only for remote resources that are actually available. 
+* File detection overrides webm_download settings
+* Integrates VideoJS 3.2.0
 
 = 1.0 =
 * Brand new installations will include posters by default. Existing installations will retain existing poster preference.
