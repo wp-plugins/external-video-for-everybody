@@ -303,12 +303,6 @@ function external_vfe_func( $atts ) {
 		$poster = "poster='{$path}{$name}.{$poster_extension}{$query}'";
 	}
 
-	//link to download a webm file
-	$webm_link = "";
-	if ( $webm_download == "true" ) {
-		$webm_link = "<a class='webm-link' href='{$path}{$name}.webm{$query}'>{$path}{$name}.webm{$query}</a><br />";
-	}
-
 	//use VideoJS to style the video controls
 	$vjs_div = "";
 	$vjs_video = "";
@@ -322,16 +316,31 @@ function external_vfe_func( $atts ) {
 	// construct URL's and <source> tags
 	$types = array ( 'mp4'=>'mp4' , 'webm'=>'webm' , 'ogv'=>'ogg' );
 	foreach ( $types as $ext => $type ) {
+
 		$url[$type] = "{$path}{$name}.{$ext}{$query}";
-		if ( get_option( 'evfe_file_detector') == true ) {
+		
+		// if using file detector
+		if ( $file_detector == "true" ) {
+			// set source and download to null
 			$source[$type] = "";
 			$download[$type] = "";
+			// if the file does not exist
 			if ( !(check_remote_source($url[$type])) ) {
+				// go to the next type
 				continue;
 			}
 		}
+
+		// otherwise build out the source and download strings
 		$source[$type] = "\n<source src='{$url[$type]}' type='video/{$type}' />";
 		$download[$type] = "<a class='{$type}-link' href='{$path}{$name}.{$ext}{$query}'>{$path}{$name}.{$ext}{$query}</a><br />";
+	}
+
+	// if not using file detection AND webm_download is false
+	if ( ( $file_detector == "false" ) && ( $webm_download == "false" ) ) {
+		// set the source and download for webm back to empty
+		$source['webm'] = '';
+		$download['webm'] = '';
 	}
 
 	//if a value for name has been provided
