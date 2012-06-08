@@ -353,6 +353,9 @@ function external_vfe_func( $atts ) {
 		$download['webm'] = '';
 	}
 
+	// create the track tag
+//	$track_tag = "\n<track kind='captions' src='{$path}{$name}.vtt{$query}' default>";
+
 	//if a value for name has been provided
 	if ( $name != 'no name' ) {
 		//render the html to display the video
