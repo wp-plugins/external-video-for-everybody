@@ -273,12 +273,16 @@ function check_remote_source( $url , $cookie='' ) {
 
 	$ch = curl_init();
 	curl_setopt( $ch , CURLOPT_URL , $url );
+	curl_setopt( $ch , CURLOPT_HEADER , 1 );
 	curl_setopt( $ch , CURLOPT_NOBODY , 1 );
 	curl_setopt( $ch , CURLOPT_FAILONERROR , 1 );
 	curl_setopt( $ch , CURLOPT_RETURNTRANSFER , 1 );
 	curl_setopt( $ch , CURLOPT_COOKIE , $cookie );
-
-	if ( curl_exec($ch) !== FALSE ) { return TRUE; }
+	curl_setopt( $ch , CURLOPT_CONNECTTIMEOUT , 1 );
+	$file_exists = curl_exec($ch);
+	curl_close($ch);
+		
+	if ( $file_exists !== FALSE ) { return TRUE; }
 	else { return FALSE; }
 
 }
