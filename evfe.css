@@ -17,3 +17,20 @@ background-image: linear-gradient(top, #666666, #cccccc);
 
 }
 
+/****** style assistance for VideoJS ******/
+
+.vjs-menu {
+	margin-bottom: 0 !important;
+}
+
+.vjs-text-track {
+	border-radius: 3px;
+	width: 400px;
+	margin: 0 auto;
+}
+
+.vjs-tt-cue {
+	font-size: 1.3em;
+	color: white;
+	text-shadow: 1px 1px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000;
+}
