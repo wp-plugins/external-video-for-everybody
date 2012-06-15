@@ -146,7 +146,6 @@ extension).
 * path (URL to the folder where you host your video files)
 * query (to follow the file name in the URL; should start with "?")
 * include_poster (set to "true" to include a poster attribute in the video tag)
-* file_detector (generate source tags and download links only for existing files)
 * webm_download (include a link to a webm file in the list of downloads)
 * poster_extension (png, jpg, or gif)
 * swf_file (The address to your Flash player)
