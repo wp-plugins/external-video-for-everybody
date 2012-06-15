@@ -3,13 +3,13 @@
 Plugin Name: External "Video for Everybody"
 Plugin URI: http://open.pages.kevinwiliarty.com/external-video-for-everybody/
 Description: Use the "Video for Everybody" code (v0.4.1--http://camendesign.com/code/video_for_everybody) to display ogg/theora, MPEG/h.264 or VP8/webm video on browsers that support the html5 &lt;video&gt; tag while falling back to Flash (h.264) on browsers that do not.
-Version: 1.0
+Version: 2.0
 Author: Kevin Wiliarty
 Author URI: http://open.pages.kevinwiliarty.com/
 */
 
 /* 
-Copyright 2010  Kevin Wiliarty (email: kevin.wiliarty@gmail.com)
+Copyright 2012  Kevin Wiliarty (email: kevin.wiliarty@gmail.com)
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
