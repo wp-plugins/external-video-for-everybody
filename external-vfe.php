@@ -358,7 +358,9 @@ function external_vfe_func( $atts ) {
 	}
 
 	// create the track tag
-	$track_tag = "\n<track kind='captions' src='{$path}{$name}.vtt{$query}' default srclang='en' label='English' />";
+	// at the moment tracks are unsupported, even with VideoJS
+	// because VideoJS uses an AJAX call which will not work across domains
+	// $track_tag = "\n<track kind='captions' src='{$path}{$name}.vtt{$query}' default srclang='en' label='English' />";
 
 	//if a value for name has been provided
 	if ( $name != 'no name' ) {
@@ -369,7 +371,7 @@ function external_vfe_func( $atts ) {
 			<!-- based on 'Video for Everybody' v0.4.2 by Kroc Camen of Camen Design -->
 			<!-- <camendesign.com/code/video_for_everybody> -->
 			<!-- ================================================ -->
-			<video id='evfe-{$name}' class='external-vfe{$vjs_video}' width='{$width}' height='{$height}' {$poster} controls preload='none'{$vjs_data}>{$source['mp4']}{$source['webm']}{$source['ogg']}{$track_tag}
+			<video id='evfe-{$name}' class='external-vfe{$vjs_video}' width='{$width}' height='{$height}' {$poster} controls preload='none'{$vjs_data}>{$source['mp4']}{$source['webm']}{$source['ogg']}
 				<object width='{$width}' height='{$height}' type='application/x-shockwave-flash' data='{$swf_file}'>
 					<param name='movie' value='{$swf_file}' />
 					<param name='flashvars' value='controlbar=over&amp;image={$path}{$name}.{$poster_extension}{$query}&amp;file={$path}{$name}.mp4{$query}' />
