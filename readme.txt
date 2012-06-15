@@ -33,8 +33,9 @@ Everybody](http://camendesign.com/code/video_for_everybody)
 approach. I also offer an options page where you can define site-wide default paths and dimensions. The defaults can be overridden in any particular shortcode, but if most of your video resides in the same place and has consistent dimensions, site-wide defaults keep the shortcodes simple. Soukenik's
 shortcodes give you more control over playback options.
 
-**Important:** Preloading (autobuffering) preferences are supported unevenly 
-across browers and versions of browsers. Depending on how many movies you 
+**Important:** Most autobuffering problems have been settled, but 
+preloading (autobuffering) preferences are supported unevenly in some
+older browers and versions of browsers. Depending on how many movies you 
 serve on a single page, and on how large they are, autobuffering can 
 significantly slow your clients' browsers, and it can also hit your bandwidth. 
 
@@ -86,7 +87,7 @@ The [Miro Video Converter](http://www.mirovideoconverter.com/) is a handy free a
 You might also be interested in trying a [shell
 script](https://github.com/kwiliarty/vfe-sh) I use to convert videos
 for myself. The shell script depends on your having certain command-line
-tools installed on your computer: ffmpeg, ffmpeg2theora, qtfaststart.py
+tools installed on your computer: ffmpeg and qtfaststart.py in particular.
 
 == Screenshots ==
 
@@ -96,7 +97,7 @@ tools installed on your computer: ffmpeg, ffmpeg2theora, qtfaststart.py
 == Upgrade Notice ==
 
 = 2.0 =
-Now includes an option to detect remote files and adjust source tags and downloads based on which files are actually available. Integrates VideoJS 3.2.0, including support for captioning.
+Now includes an option to detect remote files and adjust source tags and downloads based on which files are actually available. Integrates VideoJS 3.2.0.
 
 = 1.0 =
 Now includes an optional built-in style sheet that is especially useful for
@@ -150,6 +151,8 @@ extension).
 * poster_extension (png, jpg, or gif)
 * swf_file (The address to your Flash player)
 * vjs (set to "true" to provide attractive video controls with full screen option)
+* file_detector (try to detect remote files if "true")
+* access_cookie (if you need a simple cookie to access the remote files)
 
 All of the above can also be set as defaults on the options page under:
 Media > External VfE
