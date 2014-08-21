@@ -3,7 +3,7 @@ Contributors: kwiliarty
 Donate link: none
 Tags: video, html5, ogg, theora, flash, webm, vp8, videojs
 Requires at least: 2.8
-Tested up to: 3.9
+Tested up to: 3.9.1
 Stable tag: 2.1
 
 Delivers ogg/theora (and optional webm) html5 video from an external storage location with fallbacks to flash, and links for download.
@@ -96,6 +96,9 @@ tools installed on your computer: ffmpeg and qtfaststart.py in particular.
 
 == Upgrade Notice ==
 
+= 2.1.1 =
+Updates VideoJS library to 4.7.3
+
 = 2.1 =
 Critical security update to VideoJS 4.0.2
 
@@ -169,6 +172,9 @@ See the plugin home page for more details:
 http://open.pages.kevinwiliarty.com/external-video-for-everybody/
 
 == Changelog ==
+
+= 2.1.1 =
+* Updates VideoJS to 4.7.3
 
 = 2.1 =
 * Critical security update to VideoJS 4.0.2
