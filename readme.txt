@@ -3,7 +3,7 @@ Contributors: kwiliarty
 Donate link: none
 Tags: video, html5, ogg, theora, flash, webm, vp8, videojs
 Requires at least: 2.8
-Tested up to: 4.1.2
+Tested up to: 4.2
 Stable tag: 2.1.2
 
 Delivers ogg/theora (and optional webm) html5 video from an external storage location with fallbacks to flash, and links for download.
